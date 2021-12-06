@@ -1,0 +1,24 @@
+diff -Naur gcc-11.2.0/configure gcc-11.2.0-patched/configure
+--- gcc-11.2.0/configure	2021-07-28 07:55:06.628278148 +0100
++++ gcc-11.2.0-patched/configure	2021-12-06 15:03:19.798495111 +0000
+@@ -16478,7 +16478,7 @@
+ fi
+ 
+ 
+-RAW_CXX_FOR_TARGET="$CXX_FOR_TARGET"
++RAW_CXX_FOR_TARGET="$CXX_FOR_TARGET -nostdinc++"
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking where to find the target ar" >&5
+ $as_echo_n "checking where to find the target ar... " >&6; }
+diff -Naur gcc-11.2.0/configure.ac gcc-11.2.0-patched/configure.ac
+--- gcc-11.2.0/configure.ac	2021-07-28 07:55:06.628278148 +0100
++++ gcc-11.2.0-patched/configure.ac	2021-12-06 15:03:09.781829210 +0000
+@@ -3520,7 +3520,7 @@
+ ACX_CHECK_INSTALLED_TARGET_TOOL(WINDRES_FOR_TARGET, windres)
+ ACX_CHECK_INSTALLED_TARGET_TOOL(WINDMC_FOR_TARGET, windmc)
+ 
+-RAW_CXX_FOR_TARGET="$CXX_FOR_TARGET"
++RAW_CXX_FOR_TARGET="$CXX_FOR_TARGET -nostdinc++"
+ 
+ GCC_TARGET_TOOL(ar, AR_FOR_TARGET, AR, [binutils/ar])
+ GCC_TARGET_TOOL(as, AS_FOR_TARGET, AS, [gas/as-new])

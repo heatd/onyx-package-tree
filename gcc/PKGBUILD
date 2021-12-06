@@ -7,6 +7,10 @@ patch_package() {
 	# Grab the patch from the upstream toolchains repo
 	wget https://raw.githubusercontent.com/heatd/toolchains/master/${PKGNAME}-${PKGVER}.patch
 	patch -p1 < "${PKGNAME}-${PKGVER}.patch"
+	# For the patch below, see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103570 (reported by me)
+	# It was a duplicate of https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100017, which got me to a solution
+	# I applied the patch and ran autoreconf. Things should work now
+	patch -p1 < ../gcc-11-nostdinc-fix.patch
 }
 
 build() {
@@ -19,13 +23,10 @@ build() {
 	--with-build-sysroot=$SYSROOT --enable-languages=c,c++ --disable-nls --enable-threads=posix \
 	--enable-libstdcxx-threads --enable-shared --enable-symvers=gnu --enable-default-pie --enable-lto \
 	--enable-default-ssp --enable-checking=release --with-bugurl=https://github.com/heatd/toolchains/issues
-	# Why we don't build libstdc++ and libsanitizer
-	# libstdc++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103570. Currently waiting for a response.)
-	# libsanitizer depends on libstdc++
-	$MAKE all-gcc all-target-libgcc
+	$MAKE all-gcc all-target-libgcc all-target-libstdc++-v3 all-target-libsanitizer
 }
 
 package() {
 	cd gcc-build
-	DESTDIR=$PKGDIR $MAKE install-gcc install-target-libgcc
+	DESTDIR=$PKGDIR $MAKE install-gcc install-target-libgcc install-target-libstdc++-v3 install-target-libsanitizer
 }
