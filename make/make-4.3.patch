@@ -1,0 +1,12 @@
+diff -Naur make-4.3/build-aux/config.sub make/build-aux/config.sub
+--- make-4.3/build-aux/config.sub	2019-09-15 19:23:28.000000000 +0100
++++ make/build-aux/config.sub	2021-03-30 10:11:03.000000000 +0100
+@@ -1343,7 +1343,7 @@
+ 	     | hpux* | unos* | osf* | luna* | dgux* | auroraux* | solaris* \
+ 	     | sym* | kopensolaris* | plan9* \
+ 	     | amigaos* | amigados* | msdos* | newsos* | unicos* | aof* \
+-	     | aos* | aros* | cloudabi* | sortix* | twizzler* \
++	     | aos* | aros* | cloudabi* | sortix* | twizzler* | onyx* \
+ 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
+ 	     | clix* | riscos* | uniplus* | iris* | isc* | rtu* | xenix* \
+ 	     | knetbsd* | mirbsd* | netbsd* \

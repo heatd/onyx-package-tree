@@ -1,0 +1,21 @@
+{
+	"name" : "nyancat",
+	"fancy_name" : "nyancat",
+	"description" : "Nyanyanyanyanyanyanyanyanyan",
+	"version" : "1.5.2",
+	"license" : "NCSA",
+	"deps" :
+	[
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[
+	],
+	"provides" :
+	[
+	],
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

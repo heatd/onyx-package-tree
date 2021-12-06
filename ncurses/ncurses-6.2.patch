@@ -1,0 +1,24 @@
+diff -Naur ncurses-6.2/config.sub ncurses/config.sub
+--- ncurses-6.2/config.sub	2019-09-12 00:56:40.000000000 +0100
++++ ncurses/config.sub	2020-05-13 05:00:09.000000000 +0100
+@@ -1364,7 +1364,7 @@
+ 	     | morphos* | superux* | rtmk* | windiss* \
+ 	     | powermax* | dnix* | nx6 | nx7 | sei* | dragonfly* \
+ 	     | skyos* | haiku* | rdos* | toppers* | drops* | es* \
+-	     | onefs* | tirtos* | phoenix* | fuchsia* | redox* | bme* \
++	     | onefs* | tirtos* | phoenix* | fuchsia* | onyx* | redox* | bme* \
+ 	     | midnightbsd* | amdhsa* | unleashed* | emscripten* | wasi* \
+ 	     | nsk* | powerunix)
+ 	# Remember, each alternative MUST END IN *, to match a version number.
+diff -Naur ncurses-6.2/configure ncurses/configure
+--- ncurses-6.2/configure	2020-02-08 21:06:19.000000000 +0000
++++ ncurses/configure	2020-06-12 02:10:40.000000000 +0100
+@@ -5943,7 +5943,7 @@
+ 		fi
+ 		cf_cv_rm_so_locs=yes
+ 		;;
+-	(linux*|gnu*|k*bsd*-gnu)
++	(linux*|gnu*|k*bsd*-gnu|onyx*)
+ 		if test "$DFT_LWR_MODEL" = "shared" && test -n "$LD_RPATH_OPT" ; then
+ 			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
+ 			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"

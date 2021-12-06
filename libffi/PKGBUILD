@@ -1,0 +1,20 @@
+PKGNAME=libffi
+PKGVER=3.3
+tarball="https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+build() {
+	cd "${PKGNAME}-${PKGVER}"
+	./configure --prefix=/usr "$ONYX_CONFIGURE_OPTIONS" --enable-shared
+
+	$MAKE
+}
+
+package() {
+	cd "${PKGNAME}-${PKGVER}"
+	$MAKE install DESTDIR=$PKGDIR
+	rm -f $PKGDIR/usr/lib/libffi.la
+}

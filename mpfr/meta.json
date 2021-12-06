@@ -1,0 +1,21 @@
+{
+	"name" : "mpfr",
+	"fancy_name" : "GNU MPFR",
+	"description" : "GNU MPFR",
+	"version" : "3.1.4",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+		{"name" : "gmp", "version" : ">=6.1.0"}
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"provides" :
+	[
+		{"soname" : "libmpfr.so.4.1.4"}
+	],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

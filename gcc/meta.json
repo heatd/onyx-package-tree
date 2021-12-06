@@ -1,0 +1,23 @@
+{
+	"name" : "gcc",
+	"fancy_name" : "GCC",
+	"description" : "GNU Compiler collection",
+	"version" : "11.2.0",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+		{"name" : "mpc", "version" : ">=1.0.3"},
+		{"name" : "mpfr", "version" : ">=3.1.4"},
+		{"name" : "gmp", "version" : ">=6.1.0"}
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[
+		{"name" : "libmpc.so.3"},
+		{"name" : "libmpfr.so.4"}
+	],
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

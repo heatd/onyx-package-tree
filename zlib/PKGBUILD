@@ -1,0 +1,16 @@
+PKGNAME=zlib
+PKGVER=1.2.11
+tarball="https://zlib.net/zlib-1.2.11.tar.gz"
+
+build() {
+	mkdir -p zlib-build
+	cd zlib-build
+	cmake -G Ninja $ONYX_CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=/usr ../zlib-${PKGVER}
+
+	ninja
+}
+
+package() {
+	cd zlib-build
+	DESTDIR=$PKGDIR ninja install
+}

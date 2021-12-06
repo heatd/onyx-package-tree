@@ -1,0 +1,23 @@
+PKGNAME=ncurses
+PKGVER=6.2
+tarball="https://ftp.gnu.org/gnu/ncurses/ncurses-6.2.tar.gz"
+patches="ncurses-6.2.patch"
+
+patch_package() {
+	cd ncurses-6.2
+	patch -p1 < ../ncurses-6.2.patch
+}
+
+build() {
+	cd ncurses-6.2
+	./configure --prefix=/usr "$ONYX_CONFIGURE_OPTIONS" --with-shared --with-cxx-binding --with-cxx-shared \
+	            --enable-widec
+
+	$MAKE
+}
+
+package() {
+	cd ncurses-6.2
+	$MAKE install DESTDIR=$PKGDIR
+	echo "INPUT(-lncursesw)" > $PKGDIR/usr/lib/libncurses.so
+}

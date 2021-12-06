@@ -1,0 +1,16 @@
+{
+	"name" : "binutils",
+	"fancy_name" : "GNU binutils",
+	"description" : "GNU binutils",
+	"version" : "2.37",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

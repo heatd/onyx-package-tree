@@ -1,0 +1,23 @@
+PKGNAME=binutils
+PKGVER=2.37
+tarball="https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	# Grab the patch from the upstream toolchains repo
+	wget https://raw.githubusercontent.com/heatd/toolchains/master/${PKGNAME}-${PKGVER}.patch
+	patch -p1 < "${PKGNAME}-${PKGVER}.patch"
+}
+
+build() {
+	mkdir -p binutils-build
+	cd binutils-build
+	../${PKGNAME}-${PKGVER}/configure $ONYX_CONFIGURE_OPTIONS --prefix=/usr --with-sysroot=  --disable-werror \
+	                        --disable-nls --enable-gold --enable-lto --enable-plugins
+	$MAKE all
+}
+
+package() {
+	cd binutils-build
+	DESTDIR=$PKGDIR $MAKE install
+}

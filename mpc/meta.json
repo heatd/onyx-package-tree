@@ -1,0 +1,26 @@
+{
+	"name" : "mpc",
+	"fancy_name" : "GNU MPC",
+	"description" : "GNU MPC",
+	"version" : "1.0.3",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+		{"name" : "gmp", "version" : ">=6.1.0"},
+		{"name" : "mpfr", "version" : ">=3.1.4"}
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" : 
+	[
+		{"name" : "libmpfr.so.4"}
+	],
+	"provides" :
+	[
+		{"soname" : "libmpc.so.3.0.0"}
+	],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

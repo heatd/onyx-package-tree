@@ -1,0 +1,20 @@
+{
+	"name" : "gmp",
+	"fancy_name" : "GNU GMP",
+	"description" : "GNU GMP",
+	"version" : "6.1.0",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"provides" :
+	[
+		{"soname" : "libgmp.so.6.1.0"}
+	],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

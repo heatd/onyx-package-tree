@@ -1,0 +1,22 @@
+{
+	"name" : "libffi",
+	"fancy_name" : "libffi",
+	"description" : "Portable foreign function interface library",
+	"version" : "3.3",
+	"license" : "MIT",
+	"deps" :
+	[],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[],
+
+	"provides" :
+	[
+		{"soname" : "libffi.so.7.1.0"}
+	],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

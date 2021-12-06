@@ -1,0 +1,14 @@
+{
+	"name" : "base-system",
+	"fancy_name" : "Base system",
+	"description" : "Base system package group",
+	"version" : "0.0",
+	"package-group" : true,
+	"members" :
+	[
+		{"name" : "nano"},
+		{"name" : "libffi"},
+		{"name" : "bash"},
+		{"name" : "ncurses"}
+	]
+}

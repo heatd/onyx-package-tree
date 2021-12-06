@@ -1,0 +1,21 @@
+PKGNAME=mpc
+PKGVER=1.0.3
+tarball="https://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < "../${PKGNAME}-${PKGVER}.patch"
+}
+
+build() {
+	mkdir -p mpc-build
+	cd mpc-build
+	../${PKGNAME}-${PKGVER}/configure "$ONYX_CONFIGURE_OPTIONS" --prefix=/usr --exec-prefix=/usr --enable-shared --with-sysroot=$SYSROOT
+	$MAKE
+}
+
+package() {
+	cd mpc-build
+	DESTDIR=$PKGDIR $MAKE install
+	rm -rf $PKGDIR/usr/lib/*.la
+}

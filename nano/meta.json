@@ -1,0 +1,20 @@
+{
+	"name" : "nano",
+	"fancy_name" : "GNU nano",
+	"description" : "Command-line text editor",
+	"version" : "5.5",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+		{"name" : "ncurses", "version" : ">=6.2"}
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[
+		{"name" : "libncursesw.so.6"}
+	],
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

@@ -1,0 +1,22 @@
+PKGNAME=gmp
+PKGVER=6.1.0
+tarball="https://ftp.gnu.org/gnu/gmp/gmp-6.1.0.tar.xz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < "../${PKGNAME}-${PKGVER}.patch"
+}
+
+build() {
+	mkdir -p gmp-build
+	cd gmp-build
+	export CFLAGS="$CFLAGS -fPIC -DPIC"
+	../${PKGNAME}-${PKGVER}/configure "$ONYX_CONFIGURE_OPTIONS" --prefix=/usr --exec-prefix=/usr --enable-shared --with-sysroot=$SYSROOT
+	$MAKE
+}
+
+package() {
+	cd gmp-build
+	DESTDIR=$PKGDIR $MAKE install
+	rm -rf $PKGDIR/usr/lib/*.la
+}

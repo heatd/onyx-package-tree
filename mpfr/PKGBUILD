@@ -1,0 +1,21 @@
+PKGNAME=mpfr
+PKGVER=3.1.4
+tarball="https://ftp.gnu.org/gnu/mpfr/mpfr-3.1.4.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < "../${PKGNAME}-${PKGVER}.patch"
+}
+
+build() {
+	mkdir -p mpfr-build
+	cd mpfr-build
+	../${PKGNAME}-${PKGVER}/configure "$ONYX_CONFIGURE_OPTIONS" --prefix=/usr --exec-prefix=/usr --enable-shared --with-sysroot=$SYSROOT
+	$MAKE
+}
+
+package() {
+	cd mpfr-build
+	DESTDIR=$PKGDIR $MAKE install
+	rm -f $PKGDIR/usr/lib/*.la
+}

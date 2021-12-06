@@ -1,0 +1,20 @@
+{
+	"name" : "bash",
+	"fancy_name" : "GNU bash",
+	"description" : "The GNU Bourne Again shell",
+	"version" : "5.1.8",
+	"license" : "GPLv3+",
+	"deps" :
+	[
+		{"name" : "ncurses", "version" : ">=6.2"}
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[
+		{"name" : "libncursesw.so.6"}
+	],
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

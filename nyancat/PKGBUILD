@@ -1,0 +1,13 @@
+PKGNAME=nyancat
+PKGVER=1.5.2
+tarball="https://github.com/klange/nyancat/archive/refs/tags/1.5.2.tar.gz"
+
+build() {
+	$MAKE -C ${PKGNAME}-${PKGVER}
+}
+
+package() {
+    cd "${PKGNAME}-${PKGVER}"
+	install -Dm755 src/${PKGNAME} "$PKGDIR/usr/bin/${PKGNAME}"
+    install -Dm644 ${PKGNAME}.1 "$PKGDIR/usr/share/man/man1/${PKGNAME}.1"
+}

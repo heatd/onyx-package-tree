@@ -1,0 +1,12 @@
+diff -Naur gmp-6.1.0/configfsf.sub gmp/configfsf.sub
+--- gmp-6.1.0/configfsf.sub	2015-11-01 15:19:48.000000000 +0000
++++ gmp/configfsf.sub	2021-02-12 02:00:22.000000000 +0000
+@@ -1379,7 +1379,7 @@
+ 	      | -hpux* | -unos* | -osf* | -luna* | -dgux* | -auroraux* | -solaris* \
+ 	      | -sym* | -kopensolaris* | -plan9* \
+ 	      | -amigaos* | -amigados* | -msdos* | -newsos* | -unicos* | -aof* \
+-	      | -aos* | -aros* | -cloudabi* | -sortix* \
++	      | -aos* | -aros* | -cloudabi* | -sortix* | -onyx* \
+ 	      | -nindy* | -vxsim* | -vxworks* | -ebmon* | -hms* | -mvs* \
+ 	      | -clix* | -riscos* | -uniplus* | -iris* | -rtu* | -xenix* \
+ 	      | -hiux* | -386bsd* | -knetbsd* | -mirbsd* | -netbsd* \

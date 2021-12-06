@@ -1,0 +1,18 @@
+PKGNAME=bash
+PKGVER=5.1.8
+tarball="https://ftp.gnu.org/gnu/bash/bash-5.1.8.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < "../${PKGNAME}-${PKGVER}.patch"
+}
+build() {
+	cd "${PKGNAME}-${PKGVER}"
+	./configure "$ONYX_CONFIGURE_OPTIONS" --prefix=/usr --exec-prefix=/usr --without-gnu-malloc
+	$MAKE
+}
+
+package() {
+	cd "${PKGNAME}-${PKGVER}"
+	$MAKE DESTDIR=$PKGDIR install
+}
