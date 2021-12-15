@@ -1,0 +1,25 @@
+{
+	"name" : "python",
+	"fancy_name" : "Python",
+	"description" : "Next generation of the python high-level scripting language",
+	"version" : "3.10.1",
+	"license" : "PSF-2.0",
+	"deps" :
+	[
+		{"name" : "zlib", "version" : ">=1.2.11"},
+		{"name" : "libffi", "version" : ">=3.3"},
+		{"name" : "openssl", "version" : ">=3.0.0"}
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[],
+
+	"provides" :
+	[
+	],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

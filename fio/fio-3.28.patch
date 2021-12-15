@@ -1,0 +1,414 @@
+diff -Naur fio-fio-3.28/configure fio-3.28/configure
+--- fio-fio-3.28/configure	2021-09-08 15:59:48.000000000 +0100
++++ fio-3.28/configure	2021-12-07 02:39:21.141973690 +0000
+@@ -323,6 +323,8 @@
+ elif check_define __sun__ ; then
+   targetos='SunOS'
+   CFLAGS="$CFLAGS -D_REENTRANT"
++elif check_define __onyx__; then
++  targetos='Onyx'
+ elif check_define _WIN32 ; then
+   targetos='CYGWIN'
+ else
+diff -Naur fio-fio-3.28/helpers.c fio-3.28/helpers.c
+--- fio-fio-3.28/helpers.c	2021-09-08 15:59:48.000000000 +0100
++++ fio-3.28/helpers.c	2021-12-07 02:22:27.042051081 +0000
+@@ -18,7 +18,7 @@
+ #endif
+ 
+ #ifndef CONFIG_SYNC_FILE_RANGE
+-int sync_file_range(int fd, uint64_t offset, uint64_t nbytes,
++int sync_file_range(int fd, off_t offset, off_t nbytes,
+ 		    unsigned int flags)
+ {
+ 	errno = ENOSYS;
+diff -Naur fio-fio-3.28/helpers.h fio-3.28/helpers.h
+--- fio-fio-3.28/helpers.h	2021-09-08 15:59:48.000000000 +0100
++++ fio-3.28/helpers.h	2021-12-07 02:20:35.645392914 +0000
+@@ -8,7 +8,7 @@
+ extern int fallocate(int fd, int mode, off_t offset, off_t len);
+ extern int posix_fallocate(int fd, off_t offset, off_t len);
+ #ifndef CONFIG_SYNC_FILE_RANGE
+-extern int sync_file_range(int fd, uint64_t offset, uint64_t nbytes,
++extern int sync_file_range(int fd, off_t offset, off_t nbytes,
+ 					unsigned int flags);
+ #endif
+ extern int posix_fadvise(int fd, off_t offset, off_t len, int advice);
+diff -Naur fio-fio-3.28/os/os.h fio-3.28/os/os.h
+--- fio-fio-3.28/os/os.h	2021-09-08 15:59:48.000000000 +0100
++++ fio-3.28/os/os.h	2021-12-07 02:14:00.908756376 +0000
+@@ -24,6 +24,7 @@
+ 	os_windows,
+ 	os_android,
+ 	os_dragonfly,
++	os_onyx,
+ 
+ 	os_nr,
+ };
+@@ -55,6 +56,8 @@
+ #include "os-windows.h"
+ #elif defined (__DragonFly__)
+ #include "os-dragonfly.h"
++#elif defined(__onyx__)
++#include "os-onyx.h"
+ #else
+ #error "unsupported os"
+ #endif
+diff -Naur fio-fio-3.28/os/os-onyx.h fio-3.28/os/os-onyx.h
+--- fio-fio-3.28/os/os-onyx.h	1970-01-01 01:00:00.000000000 +0100
++++ fio-3.28/os/os-onyx.h	2021-12-07 02:24:19.755375812 +0000
+@@ -0,0 +1,261 @@
++#ifndef FIO_OS_ONYX_H
++#define FIO_OS_ONYX_H
++
++#define	FIO_OS	os_onyx
++
++#include <sys/ioctl.h>
++#include <sys/uio.h>
++#include <sys/syscall.h>
++#include <sys/sysmacros.h>
++#include <sys/vfs.h>
++#include <sys/mman.h>
++#include <unistd.h>
++#include <fcntl.h>
++#include <errno.h>
++#include <sched.h>
++#include <limits.h>
++
++#ifdef ARCH_HAVE_CRC_CRYPTO
++#include <sys/auxv.h>
++#ifndef HWCAP_CRC32
++#define HWCAP_CRC32             (1 << 7)
++#endif /* HWCAP_CRC32 */
++#endif /* ARCH_HAVE_CRC_CRYPTO */
++
++#include "../file.h"
++
++#ifndef __has_builtin         // Optional of course.
++  #define __has_builtin(x) 0  // Compatibility with non-clang compilers.
++#endif
++
++#define FIO_HAVE_GETTID
++#define FIO_USE_GENERIC_INIT_RANDOM_STATE
++#undef FIO_HAVE_PWRITEV2
++#define FIO_HAVE_SHM_ATTACH_REMOVED
++
++#undef CONFIG_SCHED_IDLE
++#define OS_MAP_ANON		MAP_ANONYMOUS
++
++#define FIO_EXT_ENG_DIR	"/usr/local/lib/fio"
++
++
++#ifndef CONFIG_HAVE_GETTID
++static inline int gettid(void)
++{
++	return syscall(__NR_gettid);
++}
++#endif
++
++#define SPLICE_DEF_SIZE	(64*1024)
++
++#ifndef BLKGETSIZE64
++#define BLKGETSIZE64	_IOR(0x12,114,size_t)
++#endif
++
++#ifndef BLKFLSBUF
++#define BLKFLSBUF	_IO(0x12,97)
++#endif
++
++#ifndef BLKDISCARD
++#define BLKDISCARD	_IO(0x12,119)
++#endif
++
++static inline int blockdev_invalidate_cache(struct fio_file *f)
++{
++	return ioctl(f->fd, BLKFLSBUF);
++}
++
++static inline int blockdev_size(struct fio_file *f, unsigned long long *bytes)
++{
++	if (!ioctl(f->fd, BLKGETSIZE64, bytes))
++		return 0;
++
++	return errno;
++}
++
++static inline unsigned long long os_phys_mem(void)
++{
++	long pagesize, pages;
++
++	pagesize = sysconf(_SC_PAGESIZE);
++	pages = sysconf(_SC_PHYS_PAGES);
++	if (pages == -1 || pagesize == -1)
++		return 0;
++
++	return (unsigned long long) pages * (unsigned long long) pagesize;
++}
++
++#ifdef O_NOATIME
++#define FIO_O_NOATIME	O_NOATIME
++#else
++#define FIO_O_NOATIME	0
++#endif
++
++#ifdef O_ATOMIC
++#define OS_O_ATOMIC	O_ATOMIC
++#else
++#define OS_O_ATOMIC	040000000
++#endif
++
++#ifdef MADV_REMOVE
++#define FIO_MADV_FREE	MADV_REMOVE
++#endif
++
++/* Check for GCC or Clang byte swap intrinsics */
++#if (__has_builtin(__builtin_bswap16) && __has_builtin(__builtin_bswap32) \
++     && __has_builtin(__builtin_bswap64)) || (__GNUC__ > 4 \
++     || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)) /* fio_swapN */
++#define fio_swap16(x)	__builtin_bswap16(x)
++#define fio_swap32(x)	__builtin_bswap32(x)
++#define fio_swap64(x)	__builtin_bswap64(x)
++#else
++#include <byteswap.h>
++#define fio_swap16(x)	bswap_16(x)
++#define fio_swap32(x)	bswap_32(x)
++#define fio_swap64(x)	bswap_64(x)
++#endif /* fio_swapN */
++
++#define FIO_HAVE_HUGETLB
++#define FIO_HAVE_MMAP_HUGE
++#define FIO_HAVE_FS_STAT
++static inline unsigned long long get_fs_free_size(const char *path)
++{
++	unsigned long long ret;
++	struct statfs s;
++
++	if (statfs(path, &s) < 0)
++		return -1ULL;
++
++	ret = s.f_bsize;
++	ret *= (unsigned long long) s.f_bfree;
++	return ret;
++}
++
++static inline int os_trim(struct fio_file *f, unsigned long long start,
++			  unsigned long long len)
++{
++	uint64_t range[2];
++
++	range[0] = start;
++	range[1] = len;
++
++	if (!ioctl(f->fd, BLKDISCARD, range))
++		return 0;
++
++	return errno;
++}
++
++#ifndef RWF_HIPRI
++#define RWF_HIPRI	0x00000001
++#endif
++#ifndef RWF_DSYNC
++#define RWF_DSYNC	0x00000002
++#endif
++#ifndef RWF_SYNC
++#define RWF_SYNC	0x00000004
++#endif
++#ifndef RWF_NOWAIT
++#define RWF_NOWAIT	0x00000008
++#endif
++
++#ifndef RWF_UNCACHED
++#define RWF_UNCACHED	0x00000040
++#endif
++
++#ifndef RWF_WRITE_LIFE_SHIFT
++#define RWF_WRITE_LIFE_SHIFT		4
++#define RWF_WRITE_LIFE_SHORT		(1 << RWF_WRITE_LIFE_SHIFT)
++#define RWF_WRITE_LIFE_MEDIUM		(2 << RWF_WRITE_LIFE_SHIFT)
++#define RWF_WRITE_LIFE_LONG		(3 << RWF_WRITE_LIFE_SHIFT)
++#define RWF_WRITE_LIFE_EXTREME		(4 << RWF_WRITE_LIFE_SHIFT)
++#endif
++
++#ifndef CONFIG_PWRITEV2
++#ifdef __NR_preadv2
++static inline void make_pos_h_l(unsigned long *pos_h, unsigned long *pos_l,
++				off_t offset)
++{
++#if BITS_PER_LONG == 64
++	*pos_l = offset;
++	*pos_h = 0;
++#else
++	*pos_l = offset & 0xffffffff;
++	*pos_h = ((uint64_t) offset) >> 32;
++#endif
++}
++static inline ssize_t preadv2(int fd, const struct iovec *iov, int iovcnt,
++			      off_t offset, unsigned int flags)
++{
++	unsigned long pos_l, pos_h;
++
++	make_pos_h_l(&pos_h, &pos_l, offset);
++	return syscall(__NR_preadv2, fd, iov, iovcnt, pos_l, pos_h, flags);
++}
++static inline ssize_t pwritev2(int fd, const struct iovec *iov, int iovcnt,
++			       off_t offset, unsigned int flags)
++{
++	unsigned long pos_l, pos_h;
++
++	make_pos_h_l(&pos_h, &pos_l, offset);
++	return syscall(__NR_pwritev2, fd, iov, iovcnt, pos_l, pos_h, flags);
++}
++#else
++static inline ssize_t preadv2(int fd, const struct iovec *iov, int iovcnt,
++			      off_t offset, unsigned int flags)
++{
++	errno = ENOSYS;
++	return -1;
++}
++static inline ssize_t pwritev2(int fd, const struct iovec *iov, int iovcnt,
++			       off_t offset, unsigned int flags)
++{
++	errno = ENOSYS;
++	return -1;
++}
++#endif /* __NR_preadv2 */
++#endif /* CONFIG_PWRITEV2 */
++
++static inline int shm_attach_to_open_removed(void)
++{
++	return 1;
++}
++
++#ifdef CONFIG_LINUX_FALLOCATE
++#define FIO_HAVE_NATIVE_FALLOCATE
++static inline bool fio_fallocate(struct fio_file *f, uint64_t offset,
++				 uint64_t len)
++{
++	int ret;
++	ret = fallocate(f->fd, 0, offset, len);
++	if (ret == 0)
++		return true;
++
++	/* Work around buggy old glibc versions... */
++	if (ret > 0)
++		errno = ret;
++
++	return false;
++}
++#endif
++
++#define FIO_HAVE_CPU_HAS
++static inline bool os_cpu_has(cpu_features feature)
++{
++	bool have_feature;
++	unsigned long fio_unused hwcap;
++
++	switch (feature) {
++#ifdef ARCH_HAVE_CRC_CRYPTO
++	case CPU_ARM64_CRC32C:
++		hwcap = getauxval(AT_HWCAP);
++		have_feature = (hwcap & HWCAP_CRC32) != 0;
++		break;
++#endif
++	default:
++		have_feature = false;
++	}
++
++	return have_feature;
++}
++
++#endif
+diff -Naur fio-fio-3.28/t/fuzz/fuzz_parseini.d fio-3.28/t/fuzz/fuzz_parseini.d
+--- fio-fio-3.28/t/fuzz/fuzz_parseini.d	1970-01-01 01:00:00.000000000 +0100
++++ fio-3.28/t/fuzz/fuzz_parseini.d	2021-12-07 02:40:00.758637332 +0000
+@@ -0,0 +1,82 @@
++t/fuzz/fuzz_parseini.o: t/fuzz/fuzz_parseini.c config-host.h fio.h \
++ compiler/compiler.h thread_options.h arch/arch.h arch/../lib/types.h \
++ arch/arch-x86_64.h arch/arch-x86-common.h arch/../lib/ffz.h os/os.h \
++ os/../arch/arch.h os/../lib/types.h os/os-onyx.h os/../file.h \
++ os/../compiler/compiler.h os/../io_ddir.h os/../flist.h os/../lib/zipf.h \
++ os/../lib/rand.h os/../lib/types.h os/../lib/axmap.h os/../lib/lfsr.h \
++ os/../lib/gauss.h options.h parse.h flist.h lib/types.h stat.h iolog.h \
++ lib/rbtree.h lib/ieee754.h ioengines.h io_u.h io_ddir.h debug.h file.h \
++ workqueue.h zbd_types.h lib/output_buffer.h diskutil.h helper_thread.h \
++ fio_sem.h json.h gettime.h lib/seqlock.h lib/types.h lib/../arch/arch.h \
++ lib/pattern.h td_error.h fifo.h log.h helpers.h minmax.h profile.h \
++ fio_time.h oslib/getopt.h lib/rand.h lib/num2str.h lib/memalign.h \
++ smalloc.h client.h server.h flow.h io_u_queue.h steadystate.h \
++ lib/nowarn_snprintf.h dedupe.h
++t/fuzz/fuzz_parseini.c:
++config-host.h:
++fio.h:
++compiler/compiler.h:
++thread_options.h:
++arch/arch.h:
++arch/../lib/types.h:
++arch/arch-x86_64.h:
++arch/arch-x86-common.h:
++arch/../lib/ffz.h:
++os/os.h:
++os/../arch/arch.h:
++os/../lib/types.h:
++os/os-onyx.h:
++os/../file.h:
++os/../compiler/compiler.h:
++os/../io_ddir.h:
++os/../flist.h:
++os/../lib/zipf.h:
++os/../lib/rand.h:
++os/../lib/types.h:
++os/../lib/axmap.h:
++os/../lib/lfsr.h:
++os/../lib/gauss.h:
++options.h:
++parse.h:
++flist.h:
++lib/types.h:
++stat.h:
++iolog.h:
++lib/rbtree.h:
++lib/ieee754.h:
++ioengines.h:
++io_u.h:
++io_ddir.h:
++debug.h:
++file.h:
++workqueue.h:
++zbd_types.h:
++lib/output_buffer.h:
++diskutil.h:
++helper_thread.h:
++fio_sem.h:
++json.h:
++gettime.h:
++lib/seqlock.h:
++lib/types.h:
++lib/../arch/arch.h:
++lib/pattern.h:
++td_error.h:
++fifo.h:
++log.h:
++helpers.h:
++minmax.h:
++profile.h:
++fio_time.h:
++oslib/getopt.h:
++lib/rand.h:
++lib/num2str.h:
++lib/memalign.h:
++smalloc.h:
++client.h:
++server.h:
++flow.h:
++io_u_queue.h:
++steadystate.h:
++lib/nowarn_snprintf.h:
++dedupe.h:
+diff -Naur fio-fio-3.28/t/fuzz/onefile.d fio-3.28/t/fuzz/onefile.d
+--- fio-fio-3.28/t/fuzz/onefile.d	1970-01-01 01:00:00.000000000 +0100
++++ fio-3.28/t/fuzz/onefile.d	2021-12-07 02:40:00.858637325 +0000
+@@ -0,0 +1,3 @@
++t/fuzz/onefile.o: t/fuzz/onefile.c config-host.h
++t/fuzz/onefile.c:
++config-host.h:

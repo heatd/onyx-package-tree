@@ -1,0 +1,23 @@
+{
+	"name" : "openssl",
+	"fancy_name" : "OpenSSL",
+	"description" : "The Open Source toolkit for Secure Sockets Layer and Transport Layer Security",
+	"version" : "3.0.0",
+	"license" : "BSD",
+	"deps" :
+	[],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[],
+
+	"provides" :
+	[
+		{"soname" : "libcrypto.so.3"},
+		{"soname" : "libssl.so.3"}
+	],
+
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}

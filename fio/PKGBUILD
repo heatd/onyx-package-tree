@@ -1,0 +1,25 @@
+PKGNAME=fio
+PKGVER=3.28
+tarball="https://github.com/axboe/fio/archive/refs/tags/fio-3.28.tar.gz"
+
+patch_package() {
+    # What kind of cursed naming is this? fio-fio-3.28??
+    mv ${PKGNAME}-${PKGNAME}-${PKGVER} ${PKGNAME}-${PKGVER}
+    cd ${PKGNAME}-${PKGVER}
+    patch -p1 < "../${PKGNAME}-${PKGVER}.patch"
+
+}
+
+build() {
+	cd ${PKGNAME}-${PKGVER}
+    ./configure --disable-nfs --prefix=/usr
+	make
+
+	$MAKE
+}
+
+package() {
+	cd ${PKGNAME}-${PKGVER}
+	$MAKE install DESTDIR=$PKGDIR
+}
+

@@ -1,0 +1,28 @@
+PKGNAME=openssl
+PKGVER=3.0.0
+tarball="https://www.openssl.org/source/openssl-3.0.0.tar.gz"
+
+patch_package() {
+	cd ${PKGNAME}-${PKGVER}
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+	cd ${PKGNAME}-${PKGVER}
+
+	if [ "$ONYX_USING_LLVM" = "yes" ]; then
+		TARGET="onyx-$ONYX_ARCH-clang"
+	else
+		TARGET="onyx-$ONYX_ARCH"
+	fi
+	# Note: We don't pass --cross-compile-prefix="$ONYX_CROSS_COMPILE_PREFIX" because the build system
+	# ends up invoking ${CROSS_COMPILE_PREFIX}${CC}, and CC is already properly set
+	./Configure "$TARGET"  --prefix=/usr --libdir=lib
+
+	$MAKE
+}
+
+package() {
+	cd ${PKGNAME}-${PKGVER}
+	$MAKE install DESTDIR=$PKGDIR
+}

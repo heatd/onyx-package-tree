@@ -1,0 +1,28 @@
+PKGNAME=python
+PKGVER=3.10.1
+tarball="https://www.python.org/ftp/python/3.10.1/Python-3.10.1.tar.xz"
+
+PYTHON_DIR=Python-${PKGVER}
+patch_package() {
+	cd "$PYTHON_DIR"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+	cd "$PYTHON_DIR"
+
+	CONFIG_SITE=../CONFIG_SITE ./configure $ONYX_CONFIGURE_OPTIONS --build=$ONYX_ARCH --enable-ipv6 \
+	--with-system-ffi --enable-shared --with-lto --prefix=/usr --without-ensurepip
+
+	$MAKE
+}
+
+package() {
+	cd "$PYTHON_DIR"
+	$MAKE install DESTDIR=$PKGDIR
+
+	ln -s python3 "${PKGDIR}/usr/bin/python"
+  	ln -s python3-config "${PKGDIR}/usr/bin/python-config"
+  	ln -s idle3 "${PKGDIR}/usr/bin/idle"
+  	ln -s pydoc3 "${PKGDIR}/usr/bin/pydoc"
+}
