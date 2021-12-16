@@ -1,6 +1,6 @@
 diff -Naur Python-3.10.1/aclocal.m4 Python-3.10.1-patched/aclocal.m4
 --- Python-3.10.1/aclocal.m4	2021-12-06 18:23:39.000000000 +0000
-+++ Python-3.10.1-patched/aclocal.m4	2021-12-15 12:48:24.540311194 +0000
++++ Python-3.10.1-patched/aclocal.m4	2021-12-16 15:27:46.310846139 +0000
 @@ -1,6 +1,6 @@
 -# generated automatically by aclocal 1.16.3 -*- Autoconf -*-
 +# generated automatically by aclocal 1.16.5 -*- Autoconf -*-
@@ -30,7 +30,7 @@ diff -Naur Python-3.10.1/aclocal.m4 Python-3.10.1-patched/aclocal.m4
                  OPENSSL_LDFLAGS="-L$ssldir/lib"
 diff -Naur Python-3.10.1/config.sub Python-3.10.1-patched/config.sub
 --- Python-3.10.1/config.sub	2021-12-06 18:23:39.000000000 +0000
-+++ Python-3.10.1-patched/config.sub	2021-12-14 14:42:55.970021059 +0000
++++ Python-3.10.1-patched/config.sub	2021-12-15 14:13:10.563918597 +0000
 @@ -1726,7 +1726,7 @@
  	     | os9* | macos* | osx* | ios* \
  	     | mpw* | magic* | mmixware* | mon960* | lnews* \
@@ -42,7 +42,7 @@ diff -Naur Python-3.10.1/config.sub Python-3.10.1-patched/config.sub
  	     | mirbsd* | netbsd* | dicos* | openedition* | ose* \
 diff -Naur Python-3.10.1/configure Python-3.10.1-patched/configure
 --- Python-3.10.1/configure	2021-12-06 18:23:39.000000000 +0000
-+++ Python-3.10.1-patched/configure	2021-12-15 12:48:26.076977944 +0000
++++ Python-3.10.1-patched/configure	2021-12-16 15:27:47.704179548 +0000
 @@ -1,11 +1,12 @@
  #! /bin/sh
  # Guess values for system-dependent variables and create Makefiles.
@@ -5433,6 +5433,15 @@ diff -Naur Python-3.10.1/configure Python-3.10.1-patched/configure
  
    case $ac_sys_system in
      CYGWIN*)
+@@ -5978,7 +6536,7 @@
+ 	      PY3LIBRARY=libpython3.so
+ 	  fi
+           ;;
+-    Linux*|GNU*|NetBSD*|FreeBSD*|DragonFly*|OpenBSD*|VxWorks*)
++    Linux*|GNU*|NetBSD*|FreeBSD*|DragonFly*|OpenBSD*|VxWorks*|Onyx*)
+ 	  LDLIBRARY='libpython$(LDVERSION).so'
+ 	  BLDLIBRARY='-L. -lpython$(LDVERSION)'
+ 	  RUNSHARED=LD_LIBRARY_PATH=`pwd`${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 @@ -6025,8 +6583,8 @@
  	RUNSHARED=
  fi
@@ -9930,6 +9939,15 @@ diff -Naur Python-3.10.1/configure Python-3.10.1-patched/configure
  if test -z "$CCSHARED"
  then
  	case $ac_sys_system/$ac_sys_release in
+@@ -9845,7 +10878,7 @@
+ 		 else CCSHARED="+z";
+ 		 fi;;
+ 	Linux-android*) ;;
+-	Linux*|GNU*) CCSHARED="-fPIC";;
++	Linux*|GNU*|Onyx*) CCSHARED="-fPIC";;
+ 	FreeBSD*|NetBSD*|OpenBSD*|DragonFly*) CCSHARED="-fPIC";;
+ 	OpenUNIX*|UnixWare*)
+ 		if test "$GCC" = "yes"
 @@ -9861,12 +10894,12 @@
  		CCSHARED="-fpic -D__SO_PICABILINUX__  -ftls-model=global-dynamic"
  	esac
@@ -9947,6 +9965,15 @@ diff -Naur Python-3.10.1/configure Python-3.10.1-patched/configure
  if test -z "$LINKFORSHARED"
  then
  	case $ac_sys_system/$ac_sys_release in
+@@ -9875,7 +10908,7 @@
+ 	    LINKFORSHARED="-Wl,-E -Wl,+s";;
+ #	    LINKFORSHARED="-Wl,-E -Wl,+s -Wl,+b\$(BINLIBDEST)/lib-dynload";;
+ 	Linux-android*) LINKFORSHARED="-pie -Xlinker -export-dynamic";;
+-	Linux*|GNU*) LINKFORSHARED="-Xlinker -export-dynamic";;
++	Linux*|GNU*|Onyx*) LINKFORSHARED="-Xlinker -export-dynamic";;
+ 	# -u libsys_s pulls in all symbols in libsys
+ 	Darwin/*)
+ 		LINKFORSHARED="$extra_undefs -framework CoreFoundation"
 @@ -9893,9 +10926,7 @@
      LINKFORSHARED="-Wl,-stack_size,$stack_size $LINKFORSHARED"
  
@@ -21388,7 +21415,7 @@ diff -Naur Python-3.10.1/configure Python-3.10.1-patched/configure
 +
 diff -Naur Python-3.10.1/configure.ac Python-3.10.1-patched/configure.ac
 --- Python-3.10.1/configure.ac	2021-12-06 18:23:39.000000000 +0000
-+++ Python-3.10.1-patched/configure.ac	2021-12-15 12:48:20.693644320 +0000
++++ Python-3.10.1-patched/configure.ac	2021-12-16 15:25:43.004172825 +0000
 @@ -8,7 +8,7 @@
  # Set VERSION so we only need to edit in one place (i.e., here)
  m4_define(PYTHON_VERSION, 3.10)
@@ -21435,6 +21462,15 @@ diff -Naur Python-3.10.1/configure.ac Python-3.10.1-patched/configure.ac
  	*-*-cygwin*)
  		_host_cpu=
  		;;
+@@ -1144,7 +1151,7 @@
+ 	      PY3LIBRARY=libpython3.so
+ 	  fi
+           ;;
+-    Linux*|GNU*|NetBSD*|FreeBSD*|DragonFly*|OpenBSD*|VxWorks*)
++    Linux*|GNU*|NetBSD*|FreeBSD*|DragonFly*|OpenBSD*|VxWorks*|Onyx*)
+ 	  LDLIBRARY='libpython$(LDVERSION).so'
+ 	  BLDLIBRARY='-L. -lpython$(LDVERSION)'
+ 	  RUNSHARED=LD_LIBRARY_PATH=`pwd`${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 @@ -2206,7 +2213,15 @@
  dnl AC_MSG_RESULT($cpp_type)
  
@@ -21461,6 +21497,24 @@ diff -Naur Python-3.10.1/configure.ac Python-3.10.1-patched/configure.ac
  		LDSHARED='$(CC) -shared'
  		LDCXXSHARED='$(CXX) -shared';;
  	FreeBSD*)
+@@ -2774,7 +2789,7 @@
+ 		 else CCSHARED="+z";
+ 		 fi;;
+ 	Linux-android*) ;;
+-	Linux*|GNU*) CCSHARED="-fPIC";;
++	Linux*|GNU*|Onyx*) CCSHARED="-fPIC";;
+ 	FreeBSD*|NetBSD*|OpenBSD*|DragonFly*) CCSHARED="-fPIC";;
+ 	OpenUNIX*|UnixWare*)
+ 		if test "$GCC" = "yes"
+@@ -2802,7 +2817,7 @@
+ 	    LINKFORSHARED="-Wl,-E -Wl,+s";;
+ #	    LINKFORSHARED="-Wl,-E -Wl,+s -Wl,+b\$(BINLIBDEST)/lib-dynload";;
+ 	Linux-android*) LINKFORSHARED="-pie -Xlinker -export-dynamic";;
+-	Linux*|GNU*) LINKFORSHARED="-Xlinker -export-dynamic";;
++	Linux*|GNU*|Onyx*) LINKFORSHARED="-Xlinker -export-dynamic";;
+ 	# -u libsys_s pulls in all symbols in libsys
+ 	Darwin/*)
+ 		LINKFORSHARED="$extra_undefs -framework CoreFoundation"
 @@ -4239,7 +4254,20 @@
  AC_CHECK_FUNCS(getnameinfo)
  
@@ -21485,7 +21539,7 @@ diff -Naur Python-3.10.1/configure.ac Python-3.10.1-patched/configure.ac
  AC_CHECK_MEMBERS([struct stat.st_rdev])
 diff -Naur Python-3.10.1/pyconfig.h.in Python-3.10.1-patched/pyconfig.h.in
 --- Python-3.10.1/pyconfig.h.in	2021-12-06 18:23:39.000000000 +0000
-+++ Python-3.10.1-patched/pyconfig.h.in	2021-12-15 12:46:02.763636827 +0000
++++ Python-3.10.1-patched/pyconfig.h.in	2021-12-15 14:13:10.577251930 +0000
 @@ -706,12 +706,12 @@
  /* Define if you have the 'memfd_create' function. */
  #undef HAVE_MEMFD_CREATE
