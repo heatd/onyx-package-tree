@@ -13,7 +13,6 @@ patch_package() {
 build() {
 	cd ${PKGNAME}-${PKGVER}
     ./configure --disable-nfs --prefix=/usr
-	make
 
 	$MAKE
 }
