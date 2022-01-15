@@ -11,6 +11,14 @@ patch_package() {
 build() {
 	cd "$PYTHON_DIR"
 
+	# PYTHON_FOR_BUILD is not the greatest, hopefully it works
+	export PYTHON_FOR_BUILD=$(python3 ../detect_best_host_python.py)
+
+	# Python uses LLVM_AR when compiling with clang LTO
+	if [ "$ONYX_USING_LLVM" = "yes" ]; then
+		export LLVM_AR=$AR
+	fi
+
 	CONFIG_SITE=../CONFIG_SITE ./configure $ONYX_CONFIGURE_OPTIONS --build=$ONYX_ARCH --enable-ipv6 \
 	--with-system-ffi --enable-shared --with-lto --prefix=/usr --without-ensurepip
 
@@ -22,7 +30,7 @@ package() {
 	$MAKE install DESTDIR=$PKGDIR
 
 	ln -s python3 "${PKGDIR}/usr/bin/python"
-  	ln -s python3-config "${PKGDIR}/usr/bin/python-config"
-  	ln -s idle3 "${PKGDIR}/usr/bin/idle"
-  	ln -s pydoc3 "${PKGDIR}/usr/bin/pydoc"
+	ln -s python3-config "${PKGDIR}/usr/bin/python-config"
+	ln -s idle3 "${PKGDIR}/usr/bin/idle"
+	ln -s pydoc3 "${PKGDIR}/usr/bin/pydoc"
 }

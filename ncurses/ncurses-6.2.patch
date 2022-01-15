@@ -1,6 +1,6 @@
-diff -Naur ncurses-6.2/config.sub ncurses/config.sub
+diff -Naur ncurses-6.2/config.sub ncurses-6.2-patched/config.sub
 --- ncurses-6.2/config.sub	2019-09-12 00:56:40.000000000 +0100
-+++ ncurses/config.sub	2020-05-13 05:00:09.000000000 +0100
++++ ncurses-6.2-patched/config.sub	2022-01-15 21:18:54.555951757 +0000
 @@ -1364,7 +1364,7 @@
  	     | morphos* | superux* | rtmk* | windiss* \
  	     | powermax* | dnix* | nx6 | nx7 | sei* | dragonfly* \
@@ -10,10 +10,19 @@ diff -Naur ncurses-6.2/config.sub ncurses/config.sub
  	     | midnightbsd* | amdhsa* | unleashed* | emscripten* | wasi* \
  	     | nsk* | powerunix)
  	# Remember, each alternative MUST END IN *, to match a version number.
-diff -Naur ncurses-6.2/configure ncurses/configure
+diff -Naur ncurses-6.2/configure ncurses-6.2-patched/configure
 --- ncurses-6.2/configure	2020-02-08 21:06:19.000000000 +0000
-+++ ncurses/configure	2020-06-12 02:10:40.000000000 +0100
-@@ -5943,7 +5943,7 @@
++++ ncurses-6.2-patched/configure	2022-01-15 21:20:00.343485561 +0000
+@@ -3228,8 +3228,6 @@
+ echo $ECHO_N "checking if $CXX works... $ECHO_C" >&6
+ 
+ 		save_CPPFLAGS="$CPPFLAGS"
+-		eval cf_includedir=${includedir}
+-		CPPFLAGS="$CPPFLAGS -I${cf_includedir}"
+ 
+ cat >conftest.$ac_ext <<_ACEOF
+ #line 3235 "configure"
+@@ -5943,7 +5941,7 @@
  		fi
  		cf_cv_rm_so_locs=yes
  		;;

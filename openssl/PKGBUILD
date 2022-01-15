@@ -17,6 +17,8 @@ build() {
 	fi
 	# Note: We don't pass --cross-compile-prefix="$ONYX_CROSS_COMPILE_PREFIX" because the build system
 	# ends up invoking ${CROSS_COMPILE_PREFIX}${CC}, and CC is already properly set
+	export CC="$CC $CFLAGS"
+	export CXX="$CXX $CXXFLAGS"
 	./Configure "$TARGET"  --prefix=/usr --libdir=lib
 
 	$MAKE
