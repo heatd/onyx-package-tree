@@ -12,7 +12,7 @@ build() {
 	cd "$PYTHON_DIR"
 
 	# PYTHON_FOR_BUILD is not the greatest, hopefully it works
-	export PYTHON_FOR_BUILD=$(python3 ../detect_best_host_python.py)
+	#export PYTHON_FOR_BUILD=$(python3 ../detect_best_host_python.py)
 
 	# Python uses LLVM_AR when compiling with clang LTO
 	if [ "$ONYX_USING_LLVM" = "yes" ]; then
