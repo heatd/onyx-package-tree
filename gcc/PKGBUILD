@@ -16,9 +16,21 @@ patch_package() {
 build() {
 	mkdir -p gcc-build
 	cd gcc-build
-	export CC_FOR_TARGET=$CC
-	export CXX_FOR_TARGET=$CXX
-	export LD_FOR_TARGET=$LD
+
+	# Setting mandatory arguments (--sysroot and for clang, --target) inside CC, CXX, LD
+	# is bad practice but works for GCC, so don't touch this
+	# Building a canadian cross is scary.
+	export CC="$CC $CFLAGS"
+	export CXX="$CXX $CXXFLAGS"
+	export CD="$LD $LDFLAGS"
+	export CC_FOR_TARGET="$CC"
+	export CXX_FOR_TARGET="$CXX"
+	export LD_FOR_TARGET="$LD"
+
+	unset -v CFLAGS
+	unset -v CXXFLAGS
+	unset -v LDFLAGS
+	unset -v CPPFLAGS
 	../${PKGNAME}-${PKGVER}/configure $ONYX_CONFIGURE_OPTIONS --prefix=/usr --with-sysroot= \
 	--with-build-sysroot=$SYSROOT --enable-languages=c,c++ --disable-nls --enable-threads=posix \
 	--enable-libstdcxx-threads --enable-shared --enable-symvers=gnu --enable-default-pie --enable-lto \
