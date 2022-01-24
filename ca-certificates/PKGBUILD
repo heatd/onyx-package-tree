@@ -1,0 +1,13 @@
+PKGNAME=ca-certificates
+PKGVER=rolling
+
+build() {
+	if ! [ -f cacert.pem ]; then
+        wget "https://curl.se/ca/cacert.pem"
+    fi
+}
+
+package() {
+    mkdir -p "$PKGDIR/usr/ssl/"
+    cp cacert.pem "$PKGDIR/usr/ssl/cert.pem"
+}
