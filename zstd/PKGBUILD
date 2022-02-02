@@ -1,0 +1,13 @@
+PKGNAME=zstd
+PKGVER=1.5.2
+tarball="https://github.com/facebook/zstd/releases/download/v${PKGVER}/zstd-${PKGVER}.tar.zst"
+
+build() {
+	cd $PKGNAME-$PKGVER
+    $MAKE
+}
+
+package() {
+	cd $PKGNAME-$PKGVER
+    DESTDIR=$PKGDIR $MAKE install V=1 PREFIX=/usr
+}

@@ -1,0 +1,17 @@
+{
+    "name": "zstd",
+    "fancy_name": "Zstandard",
+    "description": "Fast lossless compression algorithm",
+    "version": "1.5.2",
+    "license": "BSD",
+    "deps": [],
+    "optdeps": [],
+    "build-deps": [],
+    "shared_lib_deps": [],
+    "provides": [
+        {
+            "soname": "libzstd.so"
+        }
+    ],
+    "packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}
