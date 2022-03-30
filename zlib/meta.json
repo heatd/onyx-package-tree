@@ -10,7 +10,7 @@
 	"shared_lib_deps": [],
 	"provides": [
 		{
-			"soname": "libz.so.1.2.12"
+			"soname": "libz.so.1"
 		}
 	],
 	"packager": "Pedro Falcato <pedro.falcato@gmail.com>"

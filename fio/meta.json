@@ -1,20 +1,21 @@
 {
-	"name" : "fio",
-	"fancy_name" : "fio",
-	"description" : "Flexible I/O tester",
-	"version" : "3.28",
-	"license" : "GPLv2",
-	"deps" :
-	[
-		{"name" : "zlib", "version" : ">=1.2.11"}
+	"name": "fio",
+	"fancy_name": "fio",
+	"description": "Flexible I/O tester",
+	"version": "3.28",
+	"license": "GPLv2",
+	"deps": [
+		{
+			"name": "zlib",
+			"version": ">=1.2.11"
+		}
 	],
-	"optdeps" :
-	[],
-	"build-deps" :
-	[],
-	"shared_lib_deps" :
-	[
-		{"name" : "libz.so.1.2.11"}
+	"optdeps": [],
+	"build-deps": [],
+	"shared_lib_deps": [
+		{
+			"name": "libz.so.1"
+		}
 	],
-	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+	"packager": "Pedro Falcato <pedro.falcato@gmail.com>"
 }
