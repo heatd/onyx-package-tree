@@ -1,22 +1,17 @@
 {
-	"name" : "zlib",
-	"fancy_name" : "zlib",
-	"description" : "ZLIB DATA COMPRESSION LIBRARY",
-	"version" : "1.2.11",
-	"license" : "zlib",
-	"deps" :
-	[],
-	"optdeps" :
-	[],
-	"build-deps" :
-	[],
-	"shared_lib_deps" :
-	[],
-
-	"provides" :
-	[
-		{"soname" : "libz.so.1.2.11"}
+	"name": "zlib",
+	"fancy_name": "zlib",
+	"description": "ZLIB DATA COMPRESSION LIBRARY",
+	"version": "1.2.12",
+	"license": "zlib",
+	"deps": [],
+	"optdeps": [],
+	"build-deps": [],
+	"shared_lib_deps": [],
+	"provides": [
+		{
+			"soname": "libz.so.1.2.12"
+		}
 	],
-
-	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+	"packager": "Pedro Falcato <pedro.falcato@gmail.com>"
 }
