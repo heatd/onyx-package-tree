@@ -20,4 +20,11 @@ package() {
 	cd ncurses-6.2
 	$MAKE install DESTDIR=$PKGDIR
 	echo "INPUT(-lncursesw)" > $PKGDIR/usr/lib/libncurses.so
+
+	# Stolen from arch's pkgbuild
+	for lib in tic tinfo; do
+    	printf "INPUT(libncursesw.so.%s)\n" "${PKGVER:0:1}" > "$PKGDIR/usr/lib/lib${lib}.so"
+    	ln -sv libncursesw.so.${PKGVER:0:1} "$PKGDIR/usr/lib/lib${lib}.so.${PKGVER:0:1}"
+    	#ln -sv ncursesw.pc "$PKGDIR/usr/lib/pkgconfig/${lib}.pc"
+  	done
 }
