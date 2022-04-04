@@ -1,0 +1,20 @@
+PKGNAME=irssi
+PKGVER=1.2.3
+tarball="https://github.com/irssi/irssi/releases/download/1.2.3/irssi-1.2.3.tar.xz"
+
+patch_package() {
+    cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+    mkdir -p build
+    cd build
+	../irssi-1.2.3/configure --prefix=/usr --with-perl=no $ONYX_CONFIGURE_OPTIONS
+	$MAKE
+}
+
+package() {
+    cd build
+	DESTDIR=$PKGDIR $MAKE install
+}

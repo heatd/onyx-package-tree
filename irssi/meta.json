@@ -1,0 +1,30 @@
+{
+    "name": "irssi",
+    "fancy_name": "irssi",
+    "description": "Modular chat client",
+    "version": "1.2.3",
+    "license": "GPLv2",
+    "deps": [
+        {
+            "name": "openssl",
+            "version": ">=3.0.0"
+        },
+        {
+            "name": "ca-certificates",
+            "version": ">=rolling"
+        },
+        {
+            "name": "glib",
+            "version": ">=2.32.0"
+        },
+        {
+            "name": "ncurses",
+            "version": ">=6.2"
+        }
+    ],
+    "optdeps": [],
+    "build-deps": [],
+    "shared_lib_deps": [],
+    "provides": [],
+    "packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}

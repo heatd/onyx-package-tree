@@ -1,0 +1,17 @@
+PKGNAME=glib
+PKGVER=2.72.0
+tarball="https://gitlab.gnome.org/GNOME/glib/-/archive/2.72.0/glib-2.72.0.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+	meson "${PKGNAME}-${PKGVER}" build/ --prefix /usr $ONYX_MESON_OPTIONS
+	ninja -C build/
+}
+
+package() {
+	DESTDIR=$PKGDIR ninja -C build/ install
+}
