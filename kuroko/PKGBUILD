@@ -1,0 +1,19 @@
+PKGNAME=kuroko
+PKGVER=1.2.2
+tarball="https://github.com/kuroko-lang/kuroko/archive/refs/tags/v1.2.2.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+    # Meson doesn't handle re-building gracefully for now. todo.
+    rm -rf build/
+	meson "${PKGNAME}-${PKGVER}" build/ --prefix /usr $ONYX_MESON_OPTIONS
+	ninja -C build/
+}
+
+package() {
+	DESTDIR=$PKGDIR ninja -C build/ install
+}

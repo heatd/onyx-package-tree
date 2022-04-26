@@ -1,0 +1,104 @@
+diff -Naur kuroko-1.2.2/meson.build kuroko-1.2.2-patched/meson.build
+--- kuroko-1.2.2/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.2.2-patched/meson.build	2022-04-26 18:33:53.683952045 +0100
+@@ -0,0 +1,23 @@
++project('kuroko', 'c', version : '1.2.2', license : 'MIT')
++
++cc = meson.get_compiler('c')
++dl_dep = cc.find_library('dl', required : true)
++rt_dep = cc.find_library('rt', required : true)
++
++linkdeps = [dl_dep, rt_dep]
++
++subdir('src')
++
++# Having src as an include directory is required so <kuroko/> include paths work fine.
++srcinc = include_directories('src')
++
++# Kuroko exports all symbols
++executable('kuroko', 'src/kuroko.c', export_dynamic : true,
++           include_directories : srcinc, link_with : libkuroko.get_static_lib(),
++           install : true, dependencies : linkdeps)
++
++install_subdir('modules', install_dir : 'lib/kuroko/', strip_directory : true)
++
++# Generate a trivial pkgconfig file
++pkg = import('pkgconfig')
++pkg.generate(libkuroko, name : 'libkuroko', description : 'Kuroko language interpreter')
+diff -Naur kuroko-1.2.2/src/kuroko/meson.build kuroko-1.2.2-patched/src/kuroko/meson.build
+--- kuroko-1.2.2/src/kuroko/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.2.2-patched/src/kuroko/meson.build	2022-04-26 17:50:11.598003898 +0100
+@@ -0,0 +1,14 @@
++headers = ['threads.h',
++'debug.h',
++'util.h',
++'chunk.h',
++'scanner.h',
++'memory.h',
++'value.h',
++'table.h',
++'compiler.h',
++'kuroko.h',
++'vm.h',
++'object.h']
++
++install_headers(headers, subdir : 'kuroko')
+diff -Naur kuroko-1.2.2/src/meson.build kuroko-1.2.2-patched/src/meson.build
+--- kuroko-1.2.2/src/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.2.2-patched/src/meson.build	2022-04-26 18:24:01.099817421 +0100
+@@ -0,0 +1,38 @@
++libkuroko_sources = ['obj_range.c',
++'table.c',
++'debug.c',
++'obj_typing.c',
++'obj_dict.c',
++'obj_set.c',
++'obj_tuple.c',
++'vendor/rline.c',
++'value.c',
++'scanner.c',
++'fileio.c',
++'obj_gen.c',
++'time.c',
++'exceptions.c',
++'obj_numeric.c',
++'obj_str.c',
++'obj_function.c',
++'chunk.c',
++'obj_base.c',
++'compiler.c',
++'memory.c',
++'os.c',
++'builtins.c',
++'obj_list.c',
++'threads.c',
++'vm.c',
++'object.c',
++'obj_bytes.c']
++
++inc = include_directories('kuroko')
++
++srcinc = include_directories('.')
++
++subdir('kuroko')
++
++libkuroko = both_libraries('kuroko', libkuroko_sources, include_directories : inc, install : true, dependencies : linkdeps)
++
++subdir('modules')
+diff -Naur kuroko-1.2.2/src/modules/meson.build kuroko-1.2.2-patched/src/modules/meson.build
+--- kuroko-1.2.2/src/modules/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.2.2-patched/src/modules/meson.build	2022-04-26 18:24:42.977051695 +0100
+@@ -0,0 +1,13 @@
++list_of_modules = ['math', 'random', 'socket', 'timeit', 'wcwidth']
++
++# The list of modules above could easily be augmented if we wanted modules with more than a single
++# file
++
++foreach module : list_of_modules
++    deps = linkdeps
++    if module == 'math'
++        deps += cc.find_library('m', required : true)
++    endif
++    shared_module(module, 'module_' + module + '.c', include_directories : srcinc, install : true,
++                  name_prefix : '', install_dir : 'lib/kuroko', dependencies : deps)
++endforeach

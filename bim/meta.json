@@ -1,0 +1,18 @@
+{
+    "name": "bim",
+    "fancy_name": "Bim",
+    "description": "A text editor",
+    "version": "3.0.0",
+    "license": "ISC",
+    "deps": [
+        {
+            "name": "kuroko",
+            "version": ">=1.2.2"
+        }
+    ],
+    "optdeps": [],
+    "build-deps": [],
+    "shared_lib_deps": [],
+    "provides": [],
+    "packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}

@@ -1,0 +1,18 @@
+PKGNAME=bim
+PKGVER=3.0.0
+tarball="https://github.com/klange/bim/archive/refs/tags/v3.0.0.tar.gz"
+
+patch_package() {
+	cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+	cd "$PKGNAME-$PKGVER"
+	$MAKE prefix=/usr
+}
+
+package() {
+    cd "$PKGNAME-$PKGVER"
+	DESTDIR=$PKGDIR $MAKE install prefix=/usr
+}
