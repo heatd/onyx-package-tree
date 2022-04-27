@@ -12,7 +12,7 @@ diff -Naur bim-3.0.0/Makefile bim-3.0.0-patched/Makefile
  *.o: $(HEADERS)
  
  bim: bim.o
-+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $< -o $@
++	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LDLIBS)
  
  clean:
  	-rm -f $(TARGET) bim.o $(SYNTAXES)
