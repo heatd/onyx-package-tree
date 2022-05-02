@@ -1,0 +1,20 @@
+PKGNAME=dropbear
+PKGVER=2022.82
+tarball="https://mirror.dropbear.nl/mirror/dropbear-2022.82.tar.bz2"
+
+patch_package() {
+    cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+	mkdir -p dropbear-build
+	cd dropbear-build
+	../${PKGNAME}-${PKGVER}/configure $ONYX_CONFIGURE_OPTIONS --prefix=/usr --disable-nls --bindir=/usr/bin --sbindir=/usr/bin
+	$MAKE all PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp"
+}
+
+package() {
+	cd dropbear-build
+	DESTDIR=$PKGDIR $MAKE install
+}
