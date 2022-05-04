@@ -2,7 +2,7 @@
     "name": "kuroko",
     "fancy_name": "Kuroko",
     "description": "Dynamic, bytecode-compiled programming language",
-    "version": "1.2.2",
+    "version": "1.2.5",
     "license": "MIT",
     "deps": [
     ],

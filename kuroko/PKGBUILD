@@ -1,6 +1,6 @@
 PKGNAME=kuroko
-PKGVER=1.2.2
-tarball="https://github.com/kuroko-lang/kuroko/archive/refs/tags/v1.2.2.tar.gz"
+PKGVER=1.2.5
+tarball="https://github.com/kuroko-lang/kuroko/archive/refs/tags/v1.2.5.tar.gz"
 
 patch_package() {
 	cd "${PKGNAME}-${PKGVER}"
