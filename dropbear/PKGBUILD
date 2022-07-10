@@ -1,6 +1,6 @@
 PKGNAME=dropbear
 PKGVER=2022.82
-tarball="https://mirror.dropbear.nl/mirror/dropbear-2022.82.tar.bz2"
+tarball="https://matt.ucc.asn.au/dropbear/releases/dropbear-2022.82.tar.bz2"
 
 patch_package() {
     cd "${PKGNAME}-${PKGVER}"
