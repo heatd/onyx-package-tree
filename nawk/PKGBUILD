@@ -1,0 +1,20 @@
+PKGNAME=nawk
+PKGVER=20220122
+tarball="https://github.com/onetrueawk/awk/archive/refs/tags/${PKGVER}.tar.gz"
+
+patch_package() {
+	#cd "${PKGNAME}-${PKGVER}"
+	#patch -p1 < "../${PKGNAME}-${PKGVER}.patch"
+    true
+}
+
+build() {
+	cd "awk-${PKGVER}"
+	$MAKE CC="$CC $CFLAGS"
+}
+
+package() {
+	cd "awk-$PKGVER"
+    mkdir -p $PKGDIR/usr/bin/
+	cp a.out $PKGDIR/usr/bin/awk
+}

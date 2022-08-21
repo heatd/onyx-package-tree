@@ -1,0 +1,18 @@
+{
+	"name" : "nawk",
+	"fancy_name" : "One true awk",
+	"description" : "One true awk implementation",
+	"version" : "20220122",
+	"license" : "custom",
+	"deps" :
+	[
+	],
+	"optdeps" :
+	[],
+	"build-deps" :
+	[],
+	"shared_lib_deps" :
+	[
+	],
+	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
+}
