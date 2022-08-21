@@ -9,6 +9,7 @@
 		{"name" : "nano"},
 		{"name" : "libffi"},
 		{"name" : "bash"},
-		{"name" : "ncurses"}
+		{"name" : "ncurses"},
+		{"name" : "nawk"}
 	]
 }
