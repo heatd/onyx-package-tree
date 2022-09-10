@@ -1,5 +1,5 @@
 PKGNAME=gcc
-PKGVER=11.2.0
+PKGVER=12.2.0
 tarball="https://ftp.gnu.org/gnu/gcc/gcc-${PKGVER}/gcc-${PKGVER}.tar.xz"
 
 patch_package() {
@@ -7,10 +7,6 @@ patch_package() {
 	# Grab the patch from the upstream toolchains repo
 	wget https://raw.githubusercontent.com/heatd/toolchains/master/${PKGNAME}-${PKGVER}.patch
 	patch -p1 < "${PKGNAME}-${PKGVER}.patch"
-	# For the patch below, see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103570 (reported by me)
-	# It was a duplicate of https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100017, which got me to a solution
-	# I applied the patch and ran autoreconf. Things should work now
-	patch -p1 < ../gcc-11-nostdinc-fix.patch
 }
 
 build() {
