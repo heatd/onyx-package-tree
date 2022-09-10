@@ -2,7 +2,7 @@
 	"name" : "binutils",
 	"fancy_name" : "GNU binutils",
 	"description" : "GNU binutils",
-	"version" : "2.37",
+	"version" : "2.39",
 	"license" : "GPLv3+",
 	"deps" :
 	[

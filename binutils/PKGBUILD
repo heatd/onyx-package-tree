@@ -1,6 +1,6 @@
 PKGNAME=binutils
-PKGVER=2.37
-tarball="https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz"
+PKGVER=2.39
+tarball="https://ftp.gnu.org/gnu/binutils/binutils-2.39.tar.xz"
 
 patch_package() {
 	cd "${PKGNAME}-${PKGVER}"
