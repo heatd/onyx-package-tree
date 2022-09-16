@@ -1,8 +1,8 @@
-diff -Naur kuroko-1.2.5/meson.build kuroko-1.2.5-patched/meson.build
---- kuroko-1.2.5/meson.build	1970-01-01 01:00:00.000000000 +0100
-+++ kuroko-1.2.5-patched/meson.build	2022-04-26 18:33:53.683952045 +0100
+diff -Naur kuroko-1.3.0/meson.build kuroko-1.3.0-patched/meson.build
+--- kuroko-1.3.0/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.3.0-patched/meson.build	2022-09-16 03:31:44.287728211 +0100
 @@ -0,0 +1,23 @@
-+project('kuroko', 'c', version : '1.2.5', license : 'MIT')
++project('kuroko', 'c', version : '1.3.0', license : 'MIT')
 +
 +cc = meson.get_compiler('c')
 +dl_dep = cc.find_library('dl', required : true)
@@ -25,55 +25,61 @@ diff -Naur kuroko-1.2.5/meson.build kuroko-1.2.5-patched/meson.build
 +# Generate a trivial pkgconfig file
 +pkg = import('pkgconfig')
 +pkg.generate(libkuroko, name : 'libkuroko', description : 'Kuroko language interpreter')
---- kuroko-1.2.5/src/kuroko/meson.build	1970-01-01 01:00:00.000000000 +0100
-+++ kuroko-1.2.5-patched/src/kuroko/meson.build	2022-04-26 17:50:11.598003898 +0100
+diff -Naur kuroko-1.3.0/src/kuroko/meson.build kuroko-1.3.0-patched/src/kuroko/meson.build
+--- kuroko-1.3.0/src/kuroko/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.3.0-patched/src/kuroko/meson.build	2022-09-16 03:37:16.137749337 +0100
 @@ -0,0 +1,14 @@
-+headers = ['threads.h',
-+'debug.h',
-+'util.h',
-+'chunk.h',
-+'scanner.h',
-+'memory.h',
-+'value.h',
-+'table.h',
++headers = ['chunk.h',
 +'compiler.h',
++'debug.h',
 +'kuroko.h',
-+'vm.h',
-+'object.h']
++'memory.h',
++'object.h',
++'scanner.h',
++'table.h',
++'threads.h',
++'util.h',
++'value.h',
++'vm.h',]
 +
 +install_headers(headers, subdir : 'kuroko')
---- kuroko-1.2.5/src/meson.build	1970-01-01 01:00:00.000000000 +0100
-+++ kuroko-1.2.5-patched/src/meson.build	2022-04-26 18:24:01.099817421 +0100
-@@ -0,0 +1,39 @@
-+libkuroko_sources = ['obj_range.c',
-+'table.c',
-+'debug.c',
-+'obj_typing.c',
-+'obj_dict.c',
-+'obj_set.c',
-+'obj_tuple.c',
-+'vendor/rline.c',
-+'value.c',
-+'scanner.c',
-+'fileio.c',
-+'obj_gen.c',
-+'time.c',
-+'exceptions.c',
-+'obj_numeric.c',
-+'obj_str.c',
-+'obj_slice.c',
-+'obj_function.c',
+diff -Naur kuroko-1.3.0/src/meson.build kuroko-1.3.0-patched/src/meson.build
+--- kuroko-1.3.0/src/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.3.0-patched/src/meson.build	2022-09-16 03:36:42.024071167 +0100
+@@ -0,0 +1,43 @@
++libkuroko_sources = ['builtins.c',
 +'chunk.c',
-+'obj_base.c',
 +'compiler.c',
++'debug.c',
++'exceptions.c',
++'fileio.c',
++'kuroko.c',
 +'memory.c',
-+'os.c',
-+'builtins.c',
-+'obj_list.c',
-+'threads.c',
-+'vm.c',
++'obj_base.c',
++'obj_bytes.c',
++'obj_dict.c',
 +'object.c',
-+'obj_bytes.c']
++'obj_function.c',
++'obj_gen.c',
++'obj_list.c',
++'obj_long.c',
++'obj_numeric.c',
++'obj_range.c',
++'obj_set.c',
++'obj_slice.c',
++'obj_str.c',
++'obj_tuple.c',
++'obj_typing.c',
++'os.c',
++'parseargs.c',
++'scanner.c',
++'sys.c',
++'table.c',
++'threads.c',
++'time.c',
++'value.c',
++'vm.c',
++'vendor/rline.c']
 +
 +inc = include_directories('kuroko')
 +
@@ -84,9 +90,9 @@ diff -Naur kuroko-1.2.5/meson.build kuroko-1.2.5-patched/meson.build
 +libkuroko = both_libraries('kuroko', libkuroko_sources, include_directories : inc, install : true, dependencies : linkdeps)
 +
 +subdir('modules')
-diff -Naur kuroko-1.2.5/src/modules/meson.build kuroko-1.2.5-patched/src/modules/meson.build
---- kuroko-1.2.5/src/modules/meson.build	1970-01-01 01:00:00.000000000 +0100
-+++ kuroko-1.2.5-patched/src/modules/meson.build	2022-04-26 18:24:42.977051695 +0100
+diff -Naur kuroko-1.3.0/src/modules/meson.build kuroko-1.3.0-patched/src/modules/meson.build
+--- kuroko-1.3.0/src/modules/meson.build	1970-01-01 01:00:00.000000000 +0100
++++ kuroko-1.3.0-patched/src/modules/meson.build	2022-09-16 03:31:44.287728211 +0100
 @@ -0,0 +1,13 @@
 +list_of_modules = ['math', 'random', 'socket', 'timeit', 'wcwidth']
 +
