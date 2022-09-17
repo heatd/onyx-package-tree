@@ -1,6 +1,6 @@
 PKGNAME=bim
-PKGVER=3.0.0
-tarball="https://github.com/klange/bim/archive/refs/tags/v3.0.0.tar.gz"
+PKGVER=3.1.0
+tarball="https://github.com/klange/bim/archive/refs/tags/v3.1.0.tar.gz"
 
 patch_package() {
 	cd "${PKGNAME}-${PKGVER}"

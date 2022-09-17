@@ -1,0 +1,18 @@
+diff -Naur bim-3.1.0/Makefile bim-3.1.0-patched/Makefile
+--- bim-3.1.0/Makefile	2022-09-02 05:11:52.000000000 +0100
++++ bim-3.1.0-patched/Makefile	2022-09-17 01:26:39.754328476 +0100
+@@ -1,5 +1,5 @@
+ TARGET=bim
+-CFLAGS ?=-g -O2 -std=gnu11 -Wvla -pedantic -Wall -Wextra -Wno-unused-parameter -Wno-unused-result
++CFLAGS +=-g -O2 -std=gnu11 -Wvla -pedantic -Wall -Wextra -Wno-unused-parameter -Wno-unused-result
+ LDFLAGS ?=-rdynamic
+ 
+ CFLAGS += $(shell docs/git-tag)
+@@ -33,6 +33,7 @@
+ 
+ *.o: bim.h
+ bim: bim.o
++	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LDLIBS)
+ 
+ clean:
+ 	-rm -f $(TARGET) bim.o
