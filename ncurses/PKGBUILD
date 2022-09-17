@@ -1,15 +1,16 @@
 PKGNAME=ncurses
-PKGVER=6.2
-tarball="https://ftp.gnu.org/gnu/ncurses/ncurses-6.2.tar.gz"
-patches="ncurses-6.2.patch"
+PKGVER=6.3
+tarball="https://invisible-mirror.net/archives/$PKGNAME/$PKGNAME-$PKGVER.tar.gz"
+patches="ncurses-6.3.patch"
 
 patch_package() {
-	cd ncurses-6.2
-	patch -p1 < ../ncurses-6.2.patch
+	cd ncurses-${PKGVER}
+	patch -p1 < ../ncurses-${PKGVER}.patch
 }
 
 build() {
-	cd ncurses-6.2
+	cd ncurses-${PKGVER}
+	export CPPFLAGS+=" -D_GNU_SOURCE"
 	./configure --prefix=/usr "$ONYX_CONFIGURE_OPTIONS" --with-shared --with-cxx-binding --with-cxx-shared \
 	            --enable-widec
 
@@ -17,7 +18,7 @@ build() {
 }
 
 package() {
-	cd ncurses-6.2
+	cd ncurses-${PKGVER}
 	$MAKE install DESTDIR=$PKGDIR
 	echo "INPUT(-lncursesw)" > $PKGDIR/usr/lib/libncurses.so
 

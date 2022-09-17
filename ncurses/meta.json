@@ -2,7 +2,7 @@
 	"name" : "ncurses",
 	"fancy_name" : "ncurses",
 	"description" : "System V Release 4.0 curses emulation library",
-	"version" : "6.2",
+	"version" : "6.3",
 	"license" : "MIT",
 	"deps" :
 	[
@@ -16,12 +16,12 @@
 	],
 	"provides" :
 	[
-		{"soname" : "libncursesw.so.6.2"},
-		{"soname" : "libncurses++w.so.6.2"},
-		{"soname" : "libncurses++w.so.6.2"},
-		{"soname" : "libmenu.so.6.2"},
-		{"soname" : "libform.so.6.2"},
-		{"soname" : "libpanel.so.6.2"}
+		{"soname" : "libncursesw.so.6.3"},
+		{"soname" : "libncurses++w.so.6.3"},
+		{"soname" : "libncurses++w.so.6.3"},
+		{"soname" : "libmenu.so.6.3"},
+		{"soname" : "libform.so.6.3"},
+		{"soname" : "libpanel.so.6.3"}
 	],
 	"packager" : "Pedro Falcato <pedro.falcato@gmail.com>"
 }
