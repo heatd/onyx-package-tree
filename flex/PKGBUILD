@@ -1,0 +1,32 @@
+PKGNAME=flex
+PKGVER=2.6.4
+tarball="https://github.com/westes/flex/releases/download/v$PKGVER/flex-$PKGVER.tar.gz"
+
+patch_package() {
+    cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+    mkdir -p build
+    cd build
+    export CC="$CC $CFLAGS"
+	export CXX="$CXX $CXXFLAGS"
+	export LD="$LD $LDFLAGS"
+	export CC_FOR_BUILD="cc"
+	export CXX_FOR_BUILD="c++"
+    export CPP_FOR_BUILD="cpp"
+	export LD_FOR_BUILD="cc"
+
+	unset -v CFLAGS
+	unset -v CXXFLAGS
+	unset -v LDFLAGS
+	unset -v CPPFLAGS
+	CONFIG_SITE=$(realpath ../flex.cache) ../$PKGNAME-$PKGVER/configure --prefix=/usr $ONYX_CONFIGURE_OPTIONS
+	$MAKE
+}
+
+package() {
+    cd build
+	DESTDIR=$PKGDIR $MAKE install
+}

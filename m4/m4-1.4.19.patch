@@ -1,0 +1,12 @@
+diff -Naur m4-1.4.19/build-aux/config.sub m4-1.4.19-patched/build-aux/config.sub
+--- m4-1.4.19/build-aux/config.sub	2021-05-07 22:40:00.000000000 +0100
++++ m4-1.4.19-patched/build-aux/config.sub	2022-09-23 04:15:14.911044232 +0100
+@@ -1707,7 +1707,7 @@
+ 	     | os9* | macos* | osx* | ios* \
+ 	     | mpw* | magic* | mmixware* | mon960* | lnews* \
+ 	     | amigaos* | amigados* | msdos* | newsos* | unicos* | aof* \
+-	     | aos* | aros* | cloudabi* | sortix* | twizzler* \
++	     | aos* | aros* | cloudabi* | sortix* | onyx* | twizzler* \
+ 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
+ 	     | clix* | riscos* | uniplus* | iris* | isc* | rtu* | xenix* \
+ 	     | mirbsd* | netbsd* | dicos* | openedition* | ose* \

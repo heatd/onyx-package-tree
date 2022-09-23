@@ -1,0 +1,20 @@
+PKGNAME=m4
+PKGVER=1.4.19
+tarball="https://ftp.gnu.org/gnu/m4/$PKGNAME-$PKGVER.tar.xz"
+
+patch_package() {
+    cd "${PKGNAME}-${PKGVER}"
+	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+    mkdir -p build
+    cd build
+	../$PKGNAME-$PKGVER/configure --prefix=/usr $ONYX_CONFIGURE_OPTIONS
+	$MAKE
+}
+
+package() {
+    cd build
+	DESTDIR=$PKGDIR $MAKE install
+}

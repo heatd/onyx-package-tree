@@ -1,0 +1,12 @@
+diff -Naur flex-2.6.4/build-aux/config.sub flex-2.6.4-patched/build-aux/config.sub
+--- flex-2.6.4/build-aux/config.sub	2017-05-06 15:49:09.000000000 +0100
++++ flex-2.6.4-patched/build-aux/config.sub	2022-09-23 04:23:07.077899929 +0100
+@@ -1379,7 +1379,7 @@
+ 	      | -hpux* | -unos* | -osf* | -luna* | -dgux* | -auroraux* | -solaris* \
+ 	      | -sym* | -kopensolaris* | -plan9* \
+ 	      | -amigaos* | -amigados* | -msdos* | -newsos* | -unicos* | -aof* \
+-	      | -aos* | -aros* | -cloudabi* | -sortix* \
++	      | -aos* | -aros* | -cloudabi* | -sortix* | -onyx* \
+ 	      | -nindy* | -vxsim* | -vxworks* | -ebmon* | -hms* | -mvs* \
+ 	      | -clix* | -riscos* | -uniplus* | -iris* | -rtu* | -xenix* \
+ 	      | -hiux* | -386bsd* | -knetbsd* | -mirbsd* | -netbsd* \
