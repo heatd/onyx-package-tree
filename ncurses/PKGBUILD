@@ -1,6 +1,6 @@
 PKGNAME=ncurses
 PKGVER=6.3
-tarball="https://invisible-mirror.net/archives/$PKGNAME/$PKGNAME-$PKGVER.tar.gz"
+tarball="https://ftp.gnu.org/gnu/$PKGNAME/$PKGNAME-$PKGVER.tar.gz"
 patches="ncurses-6.3.patch"
 
 patch_package() {
