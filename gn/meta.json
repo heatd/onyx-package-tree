@@ -1,0 +1,14 @@
+{
+    "name": "gn",
+    "fancy_name": "Generate Ninja",
+    "description": "Generate Ninja build system",
+    "version": "0.0.0",
+    "license": "BSD",
+    "deps": [
+    ],
+    "optdeps": [],
+    "build-deps": [],
+    "shared_lib_deps": [],
+    "provides": [],
+    "packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}

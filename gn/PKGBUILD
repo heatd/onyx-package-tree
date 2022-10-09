@@ -1,0 +1,20 @@
+PKGNAME=gn
+PKGVER=0.0.0
+fetch_cmd="git clone https://github.com/heatd/gn && cd gn && git checkout onyx"
+
+patch_package() {
+    cd "gn"
+	#patch -p1 < ../${PKGNAME}-${PKGVER}.patch
+}
+
+build() {
+    cd gn
+	build/gen.py --platform=onyx
+    ninja -C out
+}
+
+package() {
+    cd gn
+    mkdir -p "$PKGDIR/usr/bin"
+    cp out/gn "$PKGDIR/usr/bin"
+}
