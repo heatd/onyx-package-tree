@@ -2,7 +2,7 @@
 	"name": "zlib",
 	"fancy_name": "zlib",
 	"description": "ZLIB DATA COMPRESSION LIBRARY",
-	"version": "1.2.12",
+	"version": "1.2.13",
 	"license": "zlib",
 	"deps": [],
 	"optdeps": [],
