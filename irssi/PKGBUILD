@@ -1,20 +1,14 @@
 PKGNAME=irssi
-PKGVER=1.2.3
-tarball="https://github.com/irssi/irssi/releases/download/1.2.3/irssi-1.2.3.tar.xz"
-
-patch_package() {
-    cd "${PKGNAME}-${PKGVER}"
-	patch -p1 < ../${PKGNAME}-${PKGVER}.patch
-}
+PKGVER=1.4.2
+tarball="https://github.com/irssi/irssi/releases/download/1.4.2/irssi-1.4.2.tar.xz"
 
 build() {
-    mkdir -p build
-    cd build
-	../irssi-1.2.3/configure --prefix=/usr --with-perl=no $ONYX_CONFIGURE_OPTIONS
-	$MAKE
+    # Meson doesn't handle re-building gracefully for now. todo.
+    rm -rf build/
+	meson "${PKGNAME}-${PKGVER}" build/ --prefix /usr -Dwith-perl=no $ONYX_MESON_OPTIONS
+	ninja -C build/
 }
 
 package() {
-    cd build
-	DESTDIR=$PKGDIR $MAKE install
+	DESTDIR=$PKGDIR ninja -C build/ install
 }
