@@ -1,7 +1,7 @@
-diff -Naur openssl-3.0.0/Configurations/10-main.conf openssl-3.0.0-patched/Configurations/10-main.conf
---- openssl-3.0.0/Configurations/10-main.conf	2021-09-07 12:46:32.000000000 +0100
-+++ openssl-3.0.0-patched/Configurations/10-main.conf	2021-12-15 11:13:21.410003849 +0000
-@@ -985,6 +985,96 @@
+diff -Naur openssl-3.0.7/Configurations/10-main.conf openssl-3.0.7-patched/Configurations/10-main.conf
+--- openssl-3.0.7/Configurations/10-main.conf	2022-11-01 14:14:36.000000000 +0000
++++ openssl-3.0.7-patched/Configurations/10-main.conf	2022-11-01 16:07:53.305697302 +0000
+@@ -993,6 +993,96 @@
          ranlib           => "true",
      },
  
@@ -98,9 +98,9 @@ diff -Naur openssl-3.0.0/Configurations/10-main.conf openssl-3.0.0-patched/Confi
  #### *BSD
      "BSD-generic32" => {
          # As for thread cflag. Idea is to maintain "collective" set of
-diff -Naur openssl-3.0.0/Configurations/shared-info.pl openssl-3.0.0-patched/Configurations/shared-info.pl
---- openssl-3.0.0/Configurations/shared-info.pl	2021-09-07 12:46:32.000000000 +0100
-+++ openssl-3.0.0-patched/Configurations/shared-info.pl	2021-12-15 11:35:43.516742834 +0000
+diff -Naur openssl-3.0.7/Configurations/shared-info.pl openssl-3.0.7-patched/Configurations/shared-info.pl
+--- openssl-3.0.7/Configurations/shared-info.pl	2022-11-01 14:14:36.000000000 +0000
++++ openssl-3.0.7-patched/Configurations/shared-info.pl	2022-11-01 16:07:53.305697302 +0000
 @@ -39,6 +39,7 @@
                  : '-Wl,-z,defs',
          };
@@ -109,9 +109,10 @@ diff -Naur openssl-3.0.0/Configurations/shared-info.pl openssl-3.0.0-patched/Con
      'bsd-gcc-shared' => sub { return $shared_info{'linux-shared'}; },
      'darwin-shared' => {
          module_ldflags        => '-bundle',
---- openssl-3.0.0/util/mkdef.pl	2021-09-07 12:46:32.000000000 +0100
-+++ openssl-3.0.0-patched/util/mkdef.pl	2021-12-15 11:44:18.900103939 +0000
-@@ -109,6 +109,7 @@
+diff -Naur openssl-3.0.7/util/mkdef.pl openssl-3.0.7-patched/util/mkdef.pl
+--- openssl-3.0.7/util/mkdef.pl	2022-11-01 14:14:36.000000000 +0000
++++ openssl-3.0.7-patched/util/mkdef.pl	2022-11-01 16:07:53.305697302 +0000
+@@ -113,6 +113,7 @@
                       platforms  => { UNIX                       => 1 } },
      "solaris-gcc" => 'solaris', # alias
      linux       => 'solaris',   # alias
