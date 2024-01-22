@@ -1,6 +1,6 @@
 PKGNAME=openssl
-PKGVER=3.0.7
-tarball="https://www.openssl.org/source/openssl-3.0.7.tar.gz"
+PKGVER=3.2.0
+tarball="https://www.openssl.org/source/openssl-${PKGVER}.tar.gz"
 
 patch_package() {
 	cd ${PKGNAME}-${PKGVER}
