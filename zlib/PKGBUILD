@@ -1,6 +1,6 @@
 PKGNAME=zlib
-PKGVER=1.3
-tarball="https://zlib.net/zlib-1.3.tar.gz"
+PKGVER=1.3.1
+tarball="https://zlib.net/zlib-${PKGVER}.tar.gz"
 
 build() {
 	mkdir -p zlib-build
