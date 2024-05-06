@@ -1,0 +1,53 @@
+Index: parted/parted-3.6/build-aux/config.guess
+===================================================================
+--- parted.orig/parted-3.6/build-aux/config.guess
++++ parted/parted-3.6/build-aux/config.guess
+@@ -304,6 +304,9 @@ case $UNAME_MACHINE:$UNAME_SYSTEM:$UNAME
+     *:Sortix:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-sortix
+ 	;;
++    *:Onyx:*:*)
++	GUESS=$UNAME_MACHINE-unknown-onyx
++	;;
+     *:Twizzler:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-twizzler
+ 	;;
+Index: parted/parted-3.6/build-aux/config.sub
+===================================================================
+--- parted.orig/parted-3.6/build-aux/config.sub
++++ parted/parted-3.6/build-aux/config.sub
+@@ -1735,7 +1735,7 @@ case $os in
+ 	     | os9* | macos* | osx* | ios* \
+ 	     | mpw* | magic* | mmixware* | mon960* | lnews* \
+ 	     | amigaos* | amigados* | msdos* | newsos* | unicos* | aof* \
+-	     | aos* | aros* | cloudabi* | sortix* | twizzler* \
++	     | aos* | aros* | cloudabi* | sortix* | onyx* | twizzler* \
+ 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
+ 	     | clix* | riscos* | uniplus* | iris* | isc* | rtu* | xenix* \
+ 	     | mirbsd* | netbsd* | dicos* | openedition* | ose* \
+Index: parted/parted-3.6/configure.ac
+===================================================================
+--- parted.orig/parted-3.6/configure.ac
++++ parted/parted-3.6/configure.ac
+@@ -62,6 +62,7 @@ case "$host_os" in
+ 	linux*|uclinux*) OS=linux ;;
+ 	gnu*)	OS=gnu ;;
+ 	beos*)	OS=beos ;;
++	onyx*)  OS=onyx ;;
+ 	*)	AC_MSG_ERROR([Unknown or unsupported OS "$host_os".  Only "linux", "uclinux", "gnu" and "beos" are supported in this version of GNU Parted.]) ;;
+ esac
+ AC_SUBST([OS])
+Index: parted/parted-3.6/libparted/Makefile.am
+===================================================================
+--- parted.orig/parted-3.6/libparted/Makefile.am
++++ parted/parted-3.6/libparted/Makefile.am
+@@ -48,7 +48,8 @@ libparted_la_SOURCES  = debug.c			\
+ EXTRA_libparted_la_SOURCES    = arch/linux.c	\
+ 				arch/linux.h	\
+ 				arch/gnu.c	\
+-				arch/beos.c
++				arch/beos.c     \
++				arch/onyx.c
+ 
+ libparted_la_LIBADD =	\
+   fs/libfs.la		\

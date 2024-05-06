@@ -1,3 +1,4 @@
 *.tar*
 *.stamp
 Python-3.10.1
+.pc/

@@ -1,0 +1,18 @@
+PKGNAME=parted
+PKGVER=3.6
+tarball="https://ftp.eq.uc.pt/software/unix/gnu/parted/parted-3.6.tar.xz"
+
+build() {
+	cd ${PKGNAME}-${PKGVER}
+	for patch in ../patches/*.diff; do
+		patch -p2 < "$patch"
+	done
+	# TODO: readline
+    ./configure --prefix=/usr --disable-device-mapper --without-readline $ONYX_CONFIGURE_OPTIONS
+	$MAKE
+}
+
+package() {
+	cd ${PKGNAME}-${PKGVER}
+	$MAKE install DESTDIR=$PKGDIR
+}

@@ -1,0 +1,14 @@
+{
+	"name": "parted",
+	"fancy_name": "GNU parted",
+	"description": "Partitioning program",
+	"version": "3.6",
+	"license": "GPLv3+",
+	"deps": [
+	],
+	"optdeps": [],
+	"build-deps": [],
+	"shared_lib_deps": [
+	],
+	"packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}
