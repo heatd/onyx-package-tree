@@ -10,6 +10,8 @@
 		{"name" : "libffi"},
 		{"name" : "bash"},
 		{"name" : "ncurses"},
-		{"name" : "nawk"}
+		{"name" : "nawk"},
+		{"name" : "parted"},
+		{"name" : "e2fsprogs"}
 	]
 }
