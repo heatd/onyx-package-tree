@@ -1,0 +1,27 @@
+Index: e2fsprogs/e2fsprogs-1.47.0/config/config.guess
+===================================================================
+--- e2fsprogs.orig/e2fsprogs-1.47.0/config/config.guess
++++ e2fsprogs/e2fsprogs-1.47.0/config/config.guess
+@@ -304,6 +304,9 @@ case $UNAME_MACHINE:$UNAME_SYSTEM:$UNAME
+     *:Sortix:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-sortix
+ 	;;
++    *:Onyx:*:*)
++	GUESS=$UNAME_MACHINE-unknown-onyx
++	;;
+     *:Twizzler:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-twizzler
+ 	;;
+Index: e2fsprogs/e2fsprogs-1.47.0/config/config.sub
+===================================================================
+--- e2fsprogs.orig/e2fsprogs-1.47.0/config/config.sub
++++ e2fsprogs/e2fsprogs-1.47.0/config/config.sub
+@@ -1735,7 +1735,7 @@ case $os in
+ 	     | os9* | macos* | osx* | ios* \
+ 	     | mpw* | magic* | mmixware* | mon960* | lnews* \
+ 	     | amigaos* | amigados* | msdos* | newsos* | unicos* | aof* \
+-	     | aos* | aros* | cloudabi* | sortix* | twizzler* \
++	     | aos* | aros* | cloudabi* | sortix* | onyx* | twizzler* \
+ 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
+ 	     | clix* | riscos* | uniplus* | iris* | isc* | rtu* | xenix* \
+ 	     | mirbsd* | netbsd* | dicos* | openedition* | ose* \

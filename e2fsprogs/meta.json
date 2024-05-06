@@ -1,0 +1,14 @@
+{
+	"name": "e2fsprogs",
+	"fancy_name": "e2fsprogs",
+	"description": "EXT2/3/4 filesystem programs",
+	"version": "1.47.0",
+	"license": "GPLv2",
+	"deps": [
+	],
+	"optdeps": [],
+	"build-deps": [],
+	"shared_lib_deps": [
+	],
+	"packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}

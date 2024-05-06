@@ -1,0 +1,17 @@
+PKGNAME=e2fsprogs
+PKGVER=1.47.0
+tarball="https://github.com/tytso/e2fsprogs/archive/refs/tags/v1.47.0.tar.gz"
+
+build() {
+	cd ${PKGNAME}-${PKGVER}
+	for patch in ../patches/*.diff; do
+		patch -p2 < "$patch"
+	done
+    ./configure --prefix=/usr $ONYX_CONFIGURE_OPTIONS
+	$MAKE
+}
+
+package() {
+	cd ${PKGNAME}-${PKGVER}
+	$MAKE install DESTDIR=$PKGDIR
+}
