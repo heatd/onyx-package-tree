@@ -1,0 +1,18 @@
+{
+    "name": "vim",
+    "fancy_name": "vim",
+    "description": "Vim - the ubiquitous text editor",
+    "version": "9.1",
+    "license": "Vim",
+    "deps": [
+        {
+            "name": "ncurses",
+            "version": ">=6.2"
+        }
+    ],
+    "optdeps": [],
+    "build-deps": [],
+    "shared_lib_deps": [],
+    "provides": [],
+    "packager": "Peter Shkenev <petershh@disroot.org>"
+}
