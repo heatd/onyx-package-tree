@@ -1,0 +1,21 @@
+PKGNAME=vim
+PKGVER=9.1
+_VIMPKGVER=91
+tarball="https://www.vim.org/downloads/vim-$PKGVER.tar.bz2"
+
+build() {
+	cd "vim$_VIMPKGVER"
+	export vim_cv_toupper_broken="no"
+	export vim_cv_terminfo="yes"
+	export vim_cv_tgetent="zero"
+	export vim_cv_getcwd_broken="no"
+	export vim_cv_stat_ignores_slash="no"
+	export vim_cv_memmove_handles_overlap="yes"
+	./configure $ONYX_CONFIGURE_OPTIONS --prefix=/usr --with-tlib=ncurses
+	make
+}
+
+package() {
+	cd "vim$_VIMPKGVER"
+	DESTDIR=$PKGDIR make install
+}
