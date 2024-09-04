@@ -1,0 +1,49 @@
+Index: popt/popt-1.19/build-aux/config.guess
+===================================================================
+--- popt.orig/popt-1.19/build-aux/config.guess
++++ popt/popt-1.19/build-aux/config.guess
+@@ -272,6 +272,9 @@ case "$UNAME_MACHINE:$UNAME_SYSTEM:$UNAM
+     *:Sortix:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-sortix
+ 	exit ;;
++	*:Onyx:*:*)
++	echo "$UNAME_MACHINE"-unknown-onyx
++	exit ;;
+     *:Redox:*:*)
+ 	echo "$UNAME_MACHINE"-unknown-redox
+ 	exit ;;
+Index: popt/popt-1.19/build-aux/config.sub
+===================================================================
+--- popt.orig/popt-1.19/build-aux/config.sub
++++ popt/popt-1.19/build-aux/config.sub
+@@ -1338,7 +1338,7 @@ case $os in
+ 	     | hpux* | unos* | osf* | luna* | dgux* | auroraux* | solaris* \
+ 	     | sym* | kopensolaris* | plan9* \
+ 	     | amigaos* | amigados* | msdos* | newsos* | unicos* | aof* \
+-	     | aos* | aros* | cloudabi* | sortix* \
++	     | aos* | aros* | cloudabi* | sortix* | onyx* \
+ 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
+ 	     | clix* | riscos* | uniplus* | iris* | isc* | rtu* | xenix* \
+ 	     | knetbsd* | mirbsd* | netbsd* \
+Index: popt/popt-1.19/m4/libtool.m4
+===================================================================
+--- popt.orig/popt-1.19/m4/libtool.m4
++++ popt/popt-1.19/m4/libtool.m4
+@@ -2713,6 +2713,17 @@ haiku*)
+   hardcode_into_libs=yes
+   ;;
+ 
++onyx*)
++  version_type=linux
++  need_lib_prefix=no
++  need_version=no
++  library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}${major} ${libname}${shared_ext}'
++  soname_spec='${libname}${release}${shared_ext}$major'
++  shlibpath_var=LD_LIBRARY_PATH
++  hardcode_into_libs=yes
++  ;;
++
++
+ hpux9* | hpux10* | hpux11*)
+   # Give a soname corresponding to the major version so that dld.sl refuses to
+   # link against other versions.

@@ -1,0 +1,22 @@
+PKGNAME=popt
+PKGVER=1.19
+tarball="http://ftp.rpm.org/popt/releases/popt-1.x/${PKGNAME}-${PKGVER}.tar.gz"
+
+patch_package() {
+    cd popt-$PKGVER
+    for patch in ../patches/*.diff; do
+		patch -p2 < "$patch"
+	done
+    autoreconf
+}
+
+build() {
+    cd popt-$PKGVER
+    ./configure --prefix=/usr $ONYX_CONFIGURE_OPTIONS
+    $MAKE
+}
+
+package() {
+    cd popt-$PKGVER
+	DESTDIR=$PKGDIR $MAKE install
+}
