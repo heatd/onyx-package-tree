@@ -1,0 +1,22 @@
+{
+    "name": "file",
+    "fancy_name": "file",
+    "description": "file",
+    "version": "5.45",
+    "license": "custom",
+    "deps": [
+        {
+            "name": "zlib",
+            "version": ">=1.3"
+        },
+        {
+            "name": "zstd",
+            "version": ">=1.5.2"
+        }
+    ],
+    "optdeps": [],
+    "build-deps": [],
+    "shared_lib_deps": [],
+    "provides": [],
+    "packager": "Pedro Falcato <pedro.falcato@gmail.com>"
+}

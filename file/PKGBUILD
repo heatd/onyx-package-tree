@@ -1,0 +1,22 @@
+PKGNAME=file
+PKGVER=5.45
+tarball="https://astron.com/pub/$PKGNAME/$PKGNAME-$PKGVER.tar.gz"
+
+patch_package() {
+    cd file-$PKGVER
+    for patch in ../patches/*.diff; do
+		patch -p2 < "$patch"
+	done
+    autoreconf
+}
+
+build() {
+    cd file-$PKGVER
+    ./configure --prefix=/usr --enable-shared $ONYX_CONFIGURE_OPTIONS
+    $MAKE
+}
+
+package() {
+    cd file-$PKGVER
+	DESTDIR=$PKGDIR $MAKE install
+}

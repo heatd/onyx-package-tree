@@ -1,0 +1,57 @@
+Index: file/file-5.45/config.guess
+===================================================================
+--- file.orig/file-5.45/config.guess
++++ file/file-5.45/config.guess
+@@ -308,6 +308,9 @@ case $UNAME_MACHINE:$UNAME_SYSTEM:$UNAME
+     *:Sortix:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-sortix
+ 	;;
++    *:Onyx:*:*)
++	GUESS=$UNAME_MACHINE-unknown-onyx
++	;;
+     *:Twizzler:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-twizzler
+ 	;;
+Index: file/file-5.45/config.sub
+===================================================================
+--- file.orig/file-5.45/config.sub
++++ file/file-5.45/config.sub
+@@ -1727,7 +1727,7 @@ case $os in
+ 	     | os9* | macos* | osx* | ios* \
+ 	     | mpw* | magic* | mmixware* | mon960* | lnews* \
+ 	     | amigaos* | amigados* | msdos* | newsos* | unicos* | aof* \
+-	     | aos* | aros* | cloudabi* | sortix* | twizzler* \
++	     | aos* | aros* | cloudabi* | sortix* | onyx* | twizzler* \
+ 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
+ 	     | clix* | riscos* | uniplus* | iris* | isc* | rtu* | xenix* \
+ 	     | mirbsd* | netbsd* | dicos* | openedition* | ose* \
+Index: file/file-5.45/m4/libtool.m4
+===================================================================
+--- file.orig/file-5.45/m4/libtool.m4
++++ file/file-5.45/m4/libtool.m4
+@@ -2836,6 +2836,16 @@ linux*android*)
+   _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='-L$libdir'
+   ;;
+ 
++onyx*)
++  version_type=linux
++  need_lib_prefix=no
++  need_version=no
++  library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}${major} ${libname}${shared_ext}'
++  soname_spec='${libname}${release}${shared_ext}$major'
++  shlibpath_var=LD_LIBRARY_PATH
++  hardcode_into_libs=yes
++  ;;
++
+ # This must be glibc/ELF.
+ linux* | k*bsd*-gnu | kopensolaris*-gnu | gnu*)
+   version_type=linux # correct to gnu/linux during the next big refactor
+@@ -3542,7 +3552,7 @@ irix5* | irix6* | nonstopux*)
+   ;;
+ 
+ # This must be glibc/ELF.
+-linux* | k*bsd*-gnu | kopensolaris*-gnu | gnu*)
++linux* | k*bsd*-gnu | kopensolaris*-gnu | gnu* | onyx*)
+   lt_cv_deplibs_check_method=pass_all
+   ;;
+ 
