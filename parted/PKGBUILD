@@ -2,13 +2,18 @@ PKGNAME=parted
 PKGVER=3.6
 tarball="https://ftp.eq.uc.pt/software/unix/gnu/parted/parted-3.6.tar.xz"
 
-build() {
+patch_package() {
 	cd ${PKGNAME}-${PKGVER}
 	for patch in ../patches/*.diff; do
 		patch -p2 < "$patch"
 	done
+	autoreconf
+}
+
+build() {
+	cd ${PKGNAME}-${PKGVER}
 	# TODO: readline
-    ./configure --prefix=/usr --disable-device-mapper --without-readline $ONYX_CONFIGURE_OPTIONS
+	./configure --prefix=/usr --disable-device-mapper --without-readline $ONYX_CONFIGURE_OPTIONS
 	$MAKE
 }
 
