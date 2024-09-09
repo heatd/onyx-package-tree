@@ -10,13 +10,30 @@ patch_package() {
     autoreconf
 }
 
+bootstrap_build() {
+    mkdir -p local_build
+    mkdir -p local_sysroot
+    LOCATION=$(realpath local_sysroot)
+    cd local_build
+    CC=gcc CFLAGS="-O2" LD=ld LDFLAGS="" CPPFLAGS="" ../file-$PKGVER/configure --prefix=$LOCATION --enable-shared
+    $MAKE CC=gcc CFLAGS="-O2" LD=ld LDFLAGS="" CPPFLAGS=""
+    $MAKE CC=gcc CFLAGS="-O2" LD=ld LDFLAGS="" CPPFLAGS="" install
+    export PATH=$LOCATION/bin:$PATH
+    cd ..
+}
+
 build() {
-    cd file-$PKGVER
-    ./configure --prefix=/usr --enable-shared $ONYX_CONFIGURE_OPTIONS
+    if [ "$(file --version | head -n1)" != "$PKGNAME-$PKGVER" ]; then
+	bootstrap_build
+    fi
+
+    mkdir -p build
+    cd build
+    ../file-$PKGVER/configure --prefix=/usr --enable-shared $ONYX_CONFIGURE_OPTIONS
     $MAKE
 }
 
 package() {
-    cd file-$PKGVER
-	DESTDIR=$PKGDIR $MAKE install
+    cd build
+    DESTDIR=$PKGDIR $MAKE install
 }
