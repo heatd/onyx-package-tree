@@ -1,5 +1,5 @@
 PKGNAME=gcc
-PKGVER=12.2.0
+PKGVER=14.2.0
 tarball="https://ftp.gnu.org/gnu/gcc/gcc-${PKGVER}/gcc-${PKGVER}.tar.xz"
 
 patch_package() {
@@ -30,7 +30,8 @@ build() {
 	../${PKGNAME}-${PKGVER}/configure $ONYX_CONFIGURE_OPTIONS --prefix=/usr --with-sysroot= \
 	--with-build-sysroot=$SYSROOT --enable-languages=c,c++ --disable-nls --enable-threads=posix \
 	--enable-libstdcxx-threads --enable-shared --enable-symvers=gnu --enable-default-pie --enable-lto \
-	--enable-default-ssp --enable-checking=release --with-bugurl=https://github.com/heatd/toolchains/issues
+	--enable-default-ssp --enable-checking=release --with-bugurl=https://github.com/heatd/toolchains/issues \
+	--enable-initfini-array
 	$MAKE all-gcc all-target-libgcc all-target-libstdc++-v3 all-target-libsanitizer
 }
 

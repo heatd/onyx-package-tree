@@ -2,7 +2,7 @@
 	"name" : "gcc",
 	"fancy_name" : "GCC",
 	"description" : "GNU Compiler collection",
-	"version" : "12.2.0",
+	"version" : "14.2.0",
 	"license" : "GPLv3+",
 	"deps" :
 	[
